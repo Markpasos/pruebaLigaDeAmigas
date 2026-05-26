@@ -1,0 +1,25 @@
+// Cargar la tabla de posiciones
+async function cargarTabla() {
+    const respuesta = await fetch('./js/data/liga_1_tabla.json');
+    const datosTabla = await respuesta.json();
+    
+    const tbody = document.getElementById('tabla-posiciones-body');
+    tbody.innerHTML = ''; // Limpiar tabla
+
+    datosTabla.forEach(equipo => {
+        tbody.innerHTML += `
+            <tr>
+                <td>${equipo.posicion}</td>
+                <td><strong>${equipo.nombre}</strong></td>
+                <td>${equipo.pts}</td>
+                <td>${equipo.pj}</td>
+                <td>${equipo.pg}</td>
+                <td>${equipo.pe}</td>
+                <td>${equipo.pp}</td>
+                <td>${equipo.gf}</td>
+                <td>${equipo.gc}</td>
+                <td>${equipo.dg >= 0 ? '+' + equipo.dg : equipo.dg}</td>
+            </tr>
+        `;
+    });
+}

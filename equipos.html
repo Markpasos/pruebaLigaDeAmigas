@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planilla de Equipos</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <h1 id="torneo-titulo-equipos">🏆 Torneo</h1>
+            <nav>
+                <a href="index.html" class="nav-link">Cambiar Liga</a>
+                <a href="posiciones.html" class="nav-link">Posiciones</a>
+                <a href="equipos.html" class="nav-link active">Equipos y Goleadores</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container grid-layout">
+        <section class="section-card">
+            <h2>Ficha por Equipo</h2>
+            <div class="selector-container-inline">
+                <label for="equipo-select">Ver Equipo:</label>
+                <select id="equipo-select">
+                    </select>
+            </div>
+            
+            <h3 id="nombre-equipo-header" class="mt-2">Seleccioná un equipo</h3>
+            <div class="table-responsive">
+                <table class="table-stats">
+                    <thead>
+                        <tr>
+                            <th class="text-left">Jugador/a</th>
+                            <th>Goles ⚽</th>
+                            <th>Asistencias 👟</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-plantel-body">
+                        <tr>
+                            <td colspan="3" class="text-center">Seleccioná un equipo para ver sus jugadores.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="section-card">
+            <h2>Máximos Anotadores</h2>
+            <div class="table-responsive">
+                <table class="table-stats highlighted-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th class="text-left">Jugador/a</th>
+                            <th>Equipo</th>
+                            <th>Goles</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-goleadores-body">
+                        <tr>
+                            <td colspan="4" class="text-center">Cargando goleadores...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Estadísticas de Fútbol Estático.</p>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', initEquipos);
+    </script>
+</body>
+</html>

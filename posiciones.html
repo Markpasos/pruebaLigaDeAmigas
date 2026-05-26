@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla de Posiciones</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <h1 id="torneo-titulo">🏆 Torneo</h1>
+            <nav>
+                <a href="index.html" class="nav-link">Cambiar Liga</a>
+                <a href="posiciones.html" class="nav-link active">Posiciones</a>
+                <a href="equipos.html" class="nav-link">Equipos y Goleadores</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="section-card">
+            <h2>Tabla de Posiciones</h2>
+            <div class="table-responsive">
+                <table class="table-stats">
+                    <thead>
+                        <tr>
+                            <th>Pos</th>
+                            <th class="text-left">Equipo</th>
+                            <th>Pts</th>
+                            <th>PJ</th>
+                            <th>PG</th>
+                            <th>PE</th>
+                            <th>PP</th>
+                            <th>GF</th>
+                            <th>GC</th>
+                            <th>DG</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-posiciones-body">
+                        <tr>
+                            <td colspan="10" class="text-center">Cargando datos de la tabla...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Estadísticas de Fútbol Estático.</p>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', initPosiciones);
+    </script>
+</body>
+</html>

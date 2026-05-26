@@ -1,25 +1,41 @@
-// Cargar la tabla de posiciones
-async function cargarTabla() {
-    const respuesta = await fetch('./js/data/liga_1_tabla.json');
-    const datosTabla = await respuesta.json();
-    
-    const tbody = document.getElementById('tabla-posiciones-body');
-    tbody.innerHTML = ''; // Limpiar tabla
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas de Torneos</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <h1>🏆 MasterTorneos</h1>
+        </div>
+    </header>
 
-    datosTabla.forEach(equipo => {
-        tbody.innerHTML += `
-            <tr>
-                <td>${equipo.posicion}</td>
-                <td><strong>${equipo.nombre}</strong></td>
-                <td>${equipo.pts}</td>
-                <td>${equipo.pj}</td>
-                <td>${equipo.pg}</td>
-                <td>${equipo.pe}</td>
-                <td>${equipo.pp}</td>
-                <td>${equipo.gf}</td>
-                <td>${equipo.gc}</td>
-                <td>${equipo.dg >= 0 ? '+' + equipo.dg : equipo.dg}</td>
-            </tr>
-        `;
-    });
-}
+    <main class="container main-center">
+        <section class="welcome-box">
+            <h2>Bienvenido al Gestor de Torneos</h2>
+            <p>Seleccioná una liga para ver las posiciones, planteles y estadísticas en tiempo real.</p>
+            
+            <div class="selector-container">
+                <label for="liga-select">Seleccionar Torneo:</label>
+                <select id="liga-select">
+                    <option value="">Cargando ligas...</option>
+                </select>
+                <button id="btn-ingresar" class="btn">Ingresar al Torneo</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Estadísticas de Fútbol Estático. Desarrollado para GitHub Pages.</p>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script>
+        // Inicialización específica de la Home
+        document.addEventListener('DOMContentLoaded', initHome);
+    </script>
+</body>
+</html>

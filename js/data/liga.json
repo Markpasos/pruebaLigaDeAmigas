@@ -1,0 +1,12 @@
+{
+  "ligas": [
+    {
+      "id": "liga_1",
+      "nombre": "Torneo Apertura F7"
+    },
+    {
+      "id": "liga_2",
+      "nombre": "Copa de Campeones 2026"
+    }
+  ]
+}

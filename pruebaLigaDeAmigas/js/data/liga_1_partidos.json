@@ -1,0 +1,47 @@
+{
+  "equipos_maestro": [
+    { "id": "eq_01", "nombre": "Cazabombas" },
+    { "id": "eq_02", "nombre": "Papeins" },
+    { "id": "eq_03", "nombre": "Avispas" },
+    { "id": "eq_04", "nombre": "Las de los Jueves" }
+  ],
+  "partidos": [
+    {
+      "fecha": 1,
+      "equipo_local": "eq_01",
+      "equipo_visitante": "eq_02",
+      "goles_local": 3,
+      "goles_visitante": 2,
+      "jugado": true,
+      "eventos": {
+        "goles": [
+          { "jugadora": "Emilse Arakaki", "equipo": "eq_01" },
+          { "jugadora": "Emilse Arakaki", "equipo": "eq_01" },
+          { "jugadora": "Natalia Krimker", "equipo": "eq_01" },
+          { "jugadora": "Emilse Arakaki", "equipo": "eq_01" },
+          { "jugadora": "Julieta Missart", "equipo": "eq_01" },
+          { "jugadora": "Clara Gomez", "equipo": "eq_02" }
+        ],
+        "asistencias": [
+          { "jugadora": "Eugenia Raposo", "equipo": "eq_01" },
+          { "jugadora": "Julieta Missart", "equipo": "eq_01" }
+        ]
+      }
+    },
+    {
+      "fecha": 1,
+      "equipo_local": "eq_03",
+      "equipo_visitante": "eq_04",
+      "goles_local": 1,
+      "goles_visitante": 1,
+      "jugado": true,
+      "eventos": {
+        "goles": [
+          { "jugadora": "Valeria Jaras", "equipo": "eq_03" },
+          { "jugadora": "Belen Arce", "equipo": "eq_04" }
+        ],
+        "asistencias": []
+      }
+    }
+  ]
+}

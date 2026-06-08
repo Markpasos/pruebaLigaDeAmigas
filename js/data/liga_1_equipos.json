@@ -1,0 +1,38 @@
+{
+  "equipos": [
+    {
+      "id": "eq_01",
+      "nombre": "Cazabombas",
+      "plantel": [
+        { "nombre": "Emilse Arakaki", "goles": 0, "asistencias": 0},
+        { "nombre": "Eugenia Raposo", "goles": 0, "asistencias": 0 },
+        { "nombre": "Natalia Krimker", "goles": 0, "asistencias": 0 },
+        { "nombre": "Andrea Perez", "goles": 0, "asistencias": 0 },
+        { "nombre": "Julieta Missart", "goles": 0, "asistencias": 0 }
+      ]
+    },
+    {
+      "id": "eq_02",
+      "nombre": "Papeins",
+      "plantel": [
+        { "nombre": "Clara Gómez", "goles": 0, "asistencias": 0 },
+        { "nombre": "Marta Díaz", "goles": 0, "asistencias": 0 }
+      ]
+    },
+    {
+      "id": "eq_03",
+      "nombre": "Avispas",
+      "plantel": [
+        { "nombre": "Valeria Jaras", "goles": 0, "asistencias": 0 },
+        { "nombre": "Camila Luna", "goles": 0, "asistencias": 0 }
+      ]
+    },
+    {
+      "id": "eq_04",
+      "nombre": "Las de los Jueves",
+      "plantel": [
+        { "nombre": "Belen Arce", "goles": 0, "asistencias": 0 }
+      ]
+    }
+  ]
+}

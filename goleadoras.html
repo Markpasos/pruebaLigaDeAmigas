@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Máximas Goleadoras</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <h1 id="torneo-titulo-goleadoras">🏆 Torneo</h1>
+            <nav>
+                <a href="index.html" class="nav-link">Cambiar Liga</a>
+                <a href="posiciones.html" class="nav-link">Posiciones</a>
+                <a href="equipos.html" class="nav-link">Equipos</a>
+                <a href="goleadoras.html" class="nav-link active">Goleadoras</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="section-card">
+            <h2>🏆 Máximas Goleadoras</h2>
+            <div class="table-responsive">
+                <table class="table-stats highlighted-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th class="text-left">Jugadora</th>
+                            <th>Equipo</th>
+                            <th>Goles ⚽</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-goleadoras-body">
+                        <tr><td colspan="4" class="text-center">Cargando goleadoras...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Estadísticas de Fútbol.</p>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', initGoleadoras);
+    </script>
+</body>
+</html>

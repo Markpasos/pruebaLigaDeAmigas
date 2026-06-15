@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipos</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <h1 id="torneo-titulo-equipos">🏆 Torneo</h1>
+            <nav>
+                <a href="index.html" class="nav-link">Cambiar Liga</a>
+                <a href="posiciones.html" class="nav-link">Posiciones</a>
+                <a href="equipos.html" class="nav-link active">Equipos</a>
+                <a href="goleadoras.html" class="nav-link">Goleadoras</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Banner del equipo seleccionado -->
+    <div id="equipo-banner" class="equipo-banner" style="background-image: url('fotos/portadas/default.jpg');">
+        <div class="banner-overlay"></div>
+    </div>
+
+    <main class="container">
+        <section class="section-card">
+            <!-- Perfil del equipo -->
+            <div class="equipo-perfil">
+                <img id="equipo-foto" class="equipo-foto-circular" src="fotos/perfiles/default.png" alt="Foto del equipo">
+                <div class="equipo-info">
+                    <div class="selector-container-inline">
+                        <label for="equipo-select">Ver Equipo:</label>
+                        <select id="equipo-select"></select>
+                    </div>
+                    <h2 id="nombre-equipo-header" class="equipo-nombre">Seleccioná un equipo</h2>
+                </div>
+            </div>
+
+            <!-- Tabla de jugadoras -->
+            <div class="table-responsive mt-2">
+                <table class="table-stats">
+                    <thead>
+                        <tr>
+                            <th class="text-left">Jugador/a</th>
+                            <th class="text-center">Goles ⚽</th>
+                            <th class="text-center">Amarillas 🟨</th>
+                            <th class="text-center">Rojas 🟥</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-plantel-body">
+                        <tr><td colspan="4" class="text-center">Seleccioná un equipo para ver sus jugadoras.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="mt-2">
+                <h3>📅 Historial de partidos</h3>
+                <div id="historial-equipo-container"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Estadísticas de Fútbol.</p>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', initEquipos);
+    </script>
+</body>
+</html>

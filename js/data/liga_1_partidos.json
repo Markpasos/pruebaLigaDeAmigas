@@ -1,72 +1,31 @@
 {
-  "equipos_maestro": [
-    {
-      "id": "eq_01",
-      "nombre": "Cazabombas",
-      "plantel": [
-        "Emilse Arakaki",
-        "Eugenia Raposo",
-        "Natalia Krimker",
-        "Andrea Perez",
-        "Yamila Rojas",
-        "Eliana Vidal",
-        "Elena Milanese",
-        "Malena Barrios",
-        "Mercedes Lema"
-      ]
-    },
-    {
-      "id": "eq_02",
-      "nombre": "Las papeins",
-      "plantel": [
-        "Brenda", "Jazmin", "Flor", "Mily", "Daiana", "Belen", "Belu", "Noelia", "Romina", "Pilar"
-      ]
-    },
-    {
-      "id": "eq_03",
-      "nombre": "Amistosos FC",
-      "plantel": [
-        "Antonella Colombo", "Ashly Lujan", "Romina Canepa", "Flor Giurleo", "Lucia Rivero",
-        "Araceli Aquino", "Silvina Mango", "Mercedes Pichipil", "Mía Forster", "Ema Forster"
-      ]
-    },
-    {
-      "id": "eq_04",
-      "nombre": "No sabemos",
-      "plantel": [
-        "Fátima (RDJ)", "Vale (RDJ)", "Sofi L (RDJ)", "Vane (RDJ)", "Emma (Amiga Jose)",
-        "Eluney (Amiga Jose)", "Jose Falcón"
-      ]
-    }
-  ],
   "partidos": [
     {
       "fecha": 1,
       "equipo_local": "eq_01",
-      "equipo_visitante": "eq_02",
+      "equipo_visitante": "eq_05",
       "jugado": true,
       "eventos": {
         "goles": [
           { "jugadora": "Emilse Arakaki", "equipo": "eq_01" }
         ],
         "tarjetas": [
-          { "jugadora": "Brenda", "equipo": "eq_02", "tipo": "amarilla" }
+          { "jugadora": "Agustina", "equipo": "eq_02", "tipo": "amarilla" }
         ]
       }
     },
     {
       "fecha": 1,
-      "equipo_local": "eq_03",
+      "equipo_local": "eq_02",
       "equipo_visitante": "eq_04",
       "jugado": true,
       "eventos": {
         "goles": [
-          { "jugadora": "Antonella Colombo", "equipo": "eq_03" },
-          { "jugadora": "Fátima (RDJ)", "equipo": "eq_04" }
+          { "jugadora": "Brenda", "equipo": "eq_02" },
+          { "jugadora": "Jose Falcón", "equipo": "eq_04"}
         ],
         "tarjetas": [
-          { "jugadora": "Antonella Colombo", "equipo": "eq_03", "tipo": "amarilla" },
-          { "jugadora": "Jose Falcón", "equipo": "eq_04", "tipo": "roja" }
+          { "jugadora": "Jose Falcón", "equipo": "eq_04", "tipo": "amarilla" }
         ]
       }
     }

@@ -1,14 +1,80 @@
 const DATA_PATH = './js/data/';
 
+let dbEquipos = [];
+let dbPlanteles = {};
 let dbPartidos = [];
-let dbEquiposMaestro = []; // Cada equipo tiene id, nombre, plantel[]
+let dbFixture = [];
 
-async function cargarMatrizCentral(ligaId) {
-    if (dbPartidos.length > 0) return;
-    const res = await fetch(`${DATA_PATH}${ligaId}_partidos.json`);
-    const data = await res.json();
-    dbPartidos = data.partidos;
-    dbEquiposMaestro = data.equipos_maestro;
+// Cargar equipos (solo ids y nombres)
+async function cargarEquipos(ligaId) {
+    try {
+        const res = await fetch(`${DATA_PATH}${ligaId}_equipos.json`);
+        const data = await res.json();
+        dbEquipos = data.equipos;
+        return true;
+    } catch (e) {
+        console.error('Error cargando equipos:', e);
+        return false;
+    }
+}
+
+// Cargar planteles
+async function cargarPlanteles(ligaId) {
+    try {
+        const res = await fetch(`${DATA_PATH}${ligaId}_planteles.json`);
+        const data = await res.json();
+        dbPlanteles = data.planteles;
+        return true;
+    } catch (e) {
+        console.error('Error cargando planteles:', e);
+        return false;
+    }
+}
+
+// Cargar partidos jugados (con eventos)
+async function cargarPartidos(ligaId) {
+    try {
+        const res = await fetch(`${DATA_PATH}${ligaId}_partidos.json`);
+        const data = await res.json();
+        dbPartidos = data.partidos;
+        return true;
+    } catch (e) {
+        console.error('Error cargando partidos:', e);
+        return false;
+    }
+}
+
+// Cargar fixture (solo fechas y horarios)
+async function cargarFixture(ligaId) {
+    try {
+        const res = await fetch(`${DATA_PATH}${ligaId}_fixture.json`);
+        const data = await res.json();
+        dbFixture = data.fechas;
+        return true;
+    } catch (e) {
+        console.error('Error cargando fixture:', e);
+        dbFixture = [];
+        return false;
+    }
+}
+
+// Cargar todos los datos necesarios
+async function cargarTodosLosDatos(ligaId) {
+    await cargarEquipos(ligaId);
+    await cargarPlanteles(ligaId);
+    await cargarPartidos(ligaId);
+    await cargarFixture(ligaId);
+}
+
+// Obtener el plantel de un equipo
+function obtenerPlantel(equipoId) {
+    return dbPlanteles[equipoId] || [];
+}
+
+// Obtener nombre de un equipo
+function obtenerNombreEquipo(equipoId) {
+    const equipo = dbEquipos.find(e => e.id === equipoId);
+    return equipo ? equipo.nombre : '?';
 }
 
 // ==================== HOME ====================
@@ -39,23 +105,10 @@ async function initHome() {
     }
 }
 
-// ========== CÁLCULO DE GOLES POR EQUIPO DESDE EVENTOS ==========
-function obtenerGolesPorEquipo() {
-    let golesEquipo = {};
-    dbEquiposMaestro.forEach(eq => { golesEquipo[eq.id] = 0; });
-    dbPartidos.forEach(p => {
-        if (!p.jugado) return;
-        p.eventos.goles.forEach(gol => {
-            golesEquipo[gol.equipo] = (golesEquipo[gol.equipo] || 0) + 1;
-        });
-    });
-    return golesEquipo;
-}
-
-// ========== TABLA DE POSICIONES ==========
+// ========== CÁLCULO DE TABLA DE POSICIONES ==========
 function calcularTablaPosiciones() {
     let tabla = {};
-    dbEquiposMaestro.forEach(eq => {
+    dbEquipos.forEach(eq => {
         tabla[eq.id] = {
             id: eq.id, nombre: eq.nombre,
             pts: 0, pj: 0, pg: 0, pe: 0, pp: 0,
@@ -68,7 +121,6 @@ function calcularTablaPosiciones() {
         const local = p.equipo_local;
         const visit = p.equipo_visitante;
 
-        // Contar goles desde eventos
         let golesLocal = 0, golesVisit = 0;
         p.eventos.goles.forEach(gol => {
             if (gol.equipo === local) golesLocal++;
@@ -112,7 +164,9 @@ async function initPosiciones() {
     if (!ligaId) { window.location.href = 'index.html'; return; }
 
     document.getElementById('torneo-titulo').textContent = `🏆 ${ligaNombre}`;
-    await cargarMatrizCentral(ligaId);
+    
+    await cargarTodosLosDatos(ligaId);
+    
     const tablaOrdenada = calcularTablaPosiciones();
 
     const tbody = document.getElementById('tabla-posiciones-body');
@@ -127,39 +181,86 @@ async function initPosiciones() {
                 <td>${eq.gf}</td><td>${eq.gc}</td><td>${eq.dg > 0 ? '+' + eq.dg : eq.dg}</td>
             </tr>`;
     });
-    renderizarFixtureGeneral();
+    
+    renderizarFixtureCompleto();
 }
 
-function renderizarFixtureGeneral() {
+function renderizarFixtureCompleto() {
     const contenedor = document.getElementById('fixture-container');
     if (!contenedor) return;
     contenedor.innerHTML = '';
-    let fechas = {};
-    dbPartidos.forEach(p => {
-        if (!fechas[p.fecha]) fechas[p.fecha] = [];
-        fechas[p.fecha].push(p);
-    });
 
-    Object.keys(fechas).forEach(numFecha => {
-        let htmlFecha = `<div class="fecha-bloque"><div class="fecha-titulo">Fecha ${numFecha}</div>`;
-        fechas[numFecha].forEach(p => {
-            const local = dbEquiposMaestro.find(e => e.id === p.equipo_local).nombre;
-            const visit = dbEquiposMaestro.find(e => e.id === p.equipo_visitante).nombre;
-            let golesLocal = 0, golesVisit = 0;
-            if (p.jugado) {
-                p.eventos.goles.forEach(gol => {
-                    if (gol.equipo === p.equipo_local) golesLocal++;
-                    else if (gol.equipo === p.equipo_visitante) golesVisit++;
-                });
-            }
-            const resultado = p.jugado ? `${golesLocal} - ${golesVisit}` : "vs";
-            htmlFecha += `
-                <div class="partido-card">
-                    <span class="partido-equipo local">${local}</span>
-                    <span class="partido-resultado">${resultado}</span>
-                    <span class="partido-equipo visitante">${visit}</span>
-                </div>`;
+    if (dbFixture.length === 0) {
+        contenedor.innerHTML = '<p class="text-center">No hay fixture cargado</p>';
+        return;
+    }
+
+    dbFixture.forEach(fecha => {
+        const fechaObj = new Date(fecha.partidos[0].fecha);
+        const fechaFormateada = fechaObj.toLocaleDateString('es-AR', {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'long'
         });
+        
+        let htmlFecha = `
+            <div class="fecha-bloque">
+                <div class="fecha-titulo">📅 Fecha ${fecha.numero} - ${fechaFormateada}</div>
+        `;
+        
+        fecha.partidos.forEach(p => {
+            const localNombre = obtenerNombreEquipo(p.equipo_local);
+            const visitNombre = obtenerNombreEquipo(p.equipo_visitante);
+            
+            let resultadoHTML = '';
+            
+            if (p.jugado) {
+                const partido = dbPartidos.find(part => 
+                    part.equipo_local === p.equipo_local && 
+                    part.equipo_visitante === p.equipo_visitante &&
+                    part.jugado === true
+                );
+                
+                if (partido) {
+                    let golesLocal = 0, golesVisit = 0;
+                    partido.eventos.goles.forEach(gol => {
+                        if (gol.equipo === p.equipo_local) golesLocal++;
+                        else if (gol.equipo === p.equipo_visitante) golesVisit++;
+                    });
+                    resultadoHTML = `<span class="partido-resultado">${golesLocal} - ${golesVisit}</span>`;
+                } else {
+                    resultadoHTML = `<span class="partido-resultado">vs</span>`;
+                }
+            } else {
+                // Crear enlace a Google Maps si existe ubicacion
+                let ubicacionHTML = '';
+                if (p.ubicacion) {
+                    ubicacionHTML = `
+                        <a href="${p.ubicacion}" target="_blank" class="ubicacion-link" title="Ver en Google Maps">📍
+                             ${p.cancha || 'Por definir'}
+                        </a>
+                    `;
+                } else {
+                    ubicacionHTML = `<span class="partido-cancha"> ${p.cancha || 'Por definir'}</span>`;
+                }
+                
+                resultadoHTML = `
+                    <div class="partido-info">
+                        <span class="partido-hora">🕐 ${p.hora || '--:--'}</span>
+                        ${ubicacionHTML}
+                    </div>
+                `;
+            }
+            
+            htmlFecha += `
+                <div class="partido-card ${p.jugado ? 'jugado' : 'proximo'}">
+                    <span class="partido-equipo local">${localNombre}</span>
+                    ${resultadoHTML}
+                    <span class="partido-equipo visitante">${visitNombre}</span>
+                </div>
+            `;
+        });
+        
         htmlFecha += `</div>`;
         contenedor.innerHTML += htmlFecha;
     });
@@ -172,11 +273,12 @@ async function initEquipos() {
     if (!ligaId) { window.location.href = 'index.html'; return; }
 
     document.getElementById('torneo-titulo-equipos').textContent = `🏆 ${ligaNombre}`;
-    await cargarMatrizCentral(ligaId);
+    
+    await cargarTodosLosDatos(ligaId);
 
     const selectEquipo = document.getElementById('equipo-select');
     selectEquipo.innerHTML = '';
-    dbEquiposMaestro.forEach(eq => {
+    dbEquipos.forEach(eq => {
         const option = document.createElement('option');
         option.value = eq.id;
         option.textContent = eq.nombre;
@@ -184,176 +286,42 @@ async function initEquipos() {
     });
 
     selectEquipo.addEventListener('change', (e) => renderizarFichaEquipo(e.target.value));
-    if (dbEquiposMaestro.length) renderizarFichaEquipo(dbEquiposMaestro[0].id);
+    if (dbEquipos.length) renderizarFichaEquipo(dbEquipos[0].id);
 }
 
 function renderizarFichaEquipo(equipoId) {
-    const equipo = dbEquiposMaestro.find(e => e.id === equipoId);
-    document.getElementById('nombre-equipo-header').textContent = equipo.nombre;
-
-    // Inicializar estadísticas para todas las jugadoras del plantel
-    let stats = {};
-    equipo.plantel.forEach(nombre => {
-        stats[nombre] = { goles: 0, amarillas: 0, rojas: 0 };
-    });
-
-    // Acumular goles y tarjetas de los partidos
-    dbPartidos.forEach(p => {
-        if (!p.jugado) return;
-        // Goles
-        p.eventos.goles.forEach(gol => {
-            if (gol.equipo === equipoId && stats[gol.jugadora]) {
-                stats[gol.jugadora].goles++;
-            }
-        });
-        // Tarjetas
-        if (p.eventos.tarjetas) {
-            p.eventos.tarjetas.forEach(tarjeta => {
-                if (tarjeta.equipo === equipoId && stats[tarjeta.jugadora]) {
-                    if (tarjeta.tipo === 'amarilla') stats[tarjeta.jugadora].amarillas++;
-                    if (tarjeta.tipo === 'roja') stats[tarjeta.jugadora].rojas++;
-                }
-            });
-        }
-    });
-
-    const tbody = document.getElementById('tabla-plantel-body');
-    tbody.innerHTML = '';
-    if (equipo.plantel.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="4" class="text-center">No hay jugadoras cargadas</td></tr>';
-    } else {
-        equipo.plantel.forEach(nombre => {
-            const s = stats[nombre];
-            tbody.innerHTML += `
-                <tr>
-                    <td class="text-left">${nombre}</td>
-                    <td>${s.goles}</td>
-                    <td>${s.amarillas}</td>
-                    <td>${s.rojas}</td>
-                </tr>`;
-        });
-    }
-
-    // Historial de partidos del equipo
-    const contenedorHistorial = document.getElementById('historial-equipo-container');
-    if (contenedorHistorial) {
-        contenedorHistorial.innerHTML = '';
-        dbPartidos.forEach(p => {
-            if (p.equipo_local === equipoId || p.equipo_visitante === equipoId) {
-                const local = dbEquiposMaestro.find(e => e.id === p.equipo_local).nombre;
-                const visit = dbEquiposMaestro.find(e => e.id === p.equipo_visitante).nombre;
-                let gLocal = 0, gVisit = 0;
-                if (p.jugado) {
-                    p.eventos.goles.forEach(gol => {
-                        if (gol.equipo === p.equipo_local) gLocal++;
-                        else if (gol.equipo === p.equipo_visitante) gVisit++;
-                    });
-                }
-                const resultado = p.jugado ? `${gLocal} - ${gVisit}` : "vs";
-                contenedorHistorial.innerHTML += `
-                    <div class="partido-card">
-                        <span class="partido-equipo local">${local}</span>
-                        <span class="partido-resultado">${resultado}</span>
-                        <span class="partido-equipo visitante">${visit}</span>
-                    </div>`;
-            }
-        });
-    }
-}
-
-function renderizarTopGoleadores() {
-    let goleadores = {};
-    dbPartidos.forEach(p => {
-        if (!p.jugado) return;
-        p.eventos.goles.forEach(gol => {
-            if (!goleadores[gol.jugadora]) {
-                goleadores[gol.jugadora] = { nombre: gol.jugadora, equipoId: gol.equipo, goles: 0 };
-            }
-            goleadores[gol.jugadora].goles++;
-        });
-    });
-
-    const lista = Object.values(goleadores).sort((a, b) => b.goles - a.goles).slice(0, 10);
-    const tbody = document.getElementById('tabla-goleadoras-body'); // Cambiado el ID
-    tbody.innerHTML = '';
-    
-    if (lista.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="4" class="text-center">No hay goles registrados</td></tr>';
-        return;
-    }
-    
-    lista.forEach((jug, idx) => {
-        const equipo = dbEquiposMaestro.find(e => e.id === jug.equipoId);
-        tbody.innerHTML += `
-            <tr>
-                <td><strong>${idx + 1}</strong></td>
-                <td class="text-left">${jug.nombre}</td>
-                <td>${equipo ? equipo.nombre : '?'}</td>
-                <td><strong>${jug.goles}</strong></td>
-            </tr>`;
-    });
-}
-
-// ========== PÁGINA GOLEADORAS ==========
-async function initGoleadoras() {
-    const ligaId = localStorage.getItem('liga_activa_id');
-    const ligaNombre = localStorage.getItem('liga_activa_nombre') || 'Torneo';
-    if (!ligaId) { 
-        window.location.href = 'index.html'; 
-        return; 
-    }
-
-    document.getElementById('torneo-titulo-goleadoras').textContent = `🏆 ${ligaNombre}`;
-    await cargarMatrizCentral(ligaId);
-    renderizarTopGoleadores();
-}
-
-function renderizarFichaEquipo(equipoId) {
-    const equipo = dbEquiposMaestro.find(e => e.id === equipoId);
+    const equipo = dbEquipos.find(e => e.id === equipoId);
     if (!equipo) return;
     
-    // Actualizar nombre
     document.getElementById('nombre-equipo-header').textContent = equipo.nombre;
     
-    // Actualizar imágenes
+    // Imágenes
     const fotoPerfil = document.getElementById('equipo-foto');
     const banner = document.getElementById('equipo-banner');
     
-    // === FOTO DE PERFIL ===
     fotoPerfil.onerror = function() { 
         this.src = 'fotos/perfiles/default.png'; 
     };
     fotoPerfil.src = `fotos/perfiles/${equipoId}.png`;
     
-    // === BANNER - SOLUCIÓN: verificar existencia primero ===
     const bannerUrl = `fotos/portadas/${equipoId}.jpg`;
     const defaultBannerUrl = 'fotos/portadas/default.jpg';
     
-    // Crear una imagen temporal para probar si existe
     const testImg = new Image();
     testImg.onload = function() {
-        // La imagen existe, usarla
         banner.style.backgroundImage = `url('${bannerUrl}')`;
-        console.log(`✅ Banner cargado: ${bannerUrl}`);
     };
     testImg.onerror = function() {
-        // La imagen no existe, usar default
         banner.style.backgroundImage = `url('${defaultBannerUrl}')`;
-        console.log(`⚠️ Banner no encontrado: ${bannerUrl}, usando default`);
-        
-        // Verificar que el default existe
-        const testDefault = new Image();
-        testDefault.onerror = function() {
-            console.error(`❌ Tampoco existe el default: ${defaultBannerUrl}`);
-            banner.style.backgroundColor = 'var(--bg-card)';
-        };
-        testDefault.src = defaultBannerUrl;
     };
     testImg.src = bannerUrl;
 
-    // Resto del código igual...
+    // Obtener plantel del equipo
+    const plantel = obtenerPlantel(equipoId);
+    
+    // Estadísticas de jugadoras
     let stats = {};
-    equipo.plantel.forEach(nombre => {
+    plantel.forEach(nombre => {
         stats[nombre] = { goles: 0, amarillas: 0, rojas: 0 };
     });
 
@@ -377,10 +345,10 @@ function renderizarFichaEquipo(equipoId) {
     const tbody = document.getElementById('tabla-plantel-body');
     tbody.innerHTML = '';
     
-    if (!equipo.plantel || equipo.plantel.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="4" class="text-center">No hay jugadoras cargadas para este equipo</td></tr>';
+    if (!plantel || plantel.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" class="text-center">No hay jugadoras cargadas</td></tr>';
     } else {
-        equipo.plantel.forEach(nombre => {
+        plantel.forEach(nombre => {
             const s = stats[nombre] || { goles: 0, amarillas: 0, rojas: 0 };
             tbody.innerHTML += `
                 <tr>
@@ -392,32 +360,121 @@ function renderizarFichaEquipo(equipoId) {
         });
     }
 
+    // Historial: Partidos jugados + Próximos
     const contenedorHistorial = document.getElementById('historial-equipo-container');
     if (contenedorHistorial) {
         contenedorHistorial.innerHTML = '';
-        dbPartidos.forEach(p => {
-            if (p.equipo_local === equipoId || p.equipo_visitante === equipoId) {
-                const local = dbEquiposMaestro.find(e => e.id === p.equipo_local).nombre;
-                const visit = dbEquiposMaestro.find(e => e.id === p.equipo_visitante).nombre;
-                let gLocal = 0, gVisit = 0;
-                if (p.jugado) {
-                    p.eventos.goles.forEach(gol => {
-                        if (gol.equipo === p.equipo_local) gLocal++;
-                        else if (gol.equipo === p.equipo_visitante) gVisit++;
-                    });
-                }
-                const resultado = p.jugado ? `${gLocal} - ${gVisit}` : "vs";
-                contenedorHistorial.innerHTML += `
-                    <div class="partido-card">
-                        <span class="partido-equipo local">${local}</span>
-                        <span class="partido-resultado">${resultado}</span>
-                        <span class="partido-equipo visitante">${visit}</span>
-                    </div>`;
-            }
-        });
         
-        if (contenedorHistorial.innerHTML === '') {
-            contenedorHistorial.innerHTML = '<p class="text-center">No hay partidos registrados</p>';
+        // 1. Partidos jugados (desde dbPartidos)
+        let partidosJugados = dbPartidos.filter(p => 
+            (p.equipo_local === equipoId || p.equipo_visitante === equipoId) && p.jugado
+        );
+        
+        if (partidosJugados.length > 0) {
+            contenedorHistorial.innerHTML += `<div class="historial-subtitulo">📊 Partidos Jugados</div>`;
+            partidosJugados.forEach(p => {
+                const localNombre = obtenerNombreEquipo(p.equipo_local);
+                const visitNombre = obtenerNombreEquipo(p.equipo_visitante);
+                let gLocal = 0, gVisit = 0;
+                p.eventos.goles.forEach(gol => {
+                    if (gol.equipo === p.equipo_local) gLocal++;
+                    else if (gol.equipo === p.equipo_visitante) gVisit++;
+                });
+                contenedorHistorial.innerHTML += `
+                    <div class="partido-card jugado">
+                        <span class="partido-equipo local">${localNombre}</span>
+                        <span class="partido-resultado">${gLocal} - ${gVisit}</span>
+                        <span class="partido-equipo visitante">${visitNombre}</span>
+                    </div>`;
+            });
+        }
+
+        // 2. Próximos partidos (desde fixture)
+        let partidosProximos = [];
+        dbFixture.forEach(fecha => {
+            fecha.partidos.forEach(p => {
+                if ((p.equipo_local === equipoId || p.equipo_visitante === equipoId) && !p.jugado) {
+                    partidosProximos.push({ ...p, fechaNumero: fecha.numero });
+                }
+            });
+        });
+
+        if (partidosProximos.length > 0) {
+            contenedorHistorial.innerHTML += `<div class="historial-subtitulo">📅 Próximos Partidos</div>`;
+            partidosProximos.forEach(p => {
+                const localNombre = obtenerNombreEquipo(p.equipo_local);
+                const visitNombre = obtenerNombreEquipo(p.equipo_visitante);
+                const fechaObj = new Date(p.fecha);
+                const fechaFormateada = fechaObj.toLocaleDateString('es-AR', {
+                    day: 'numeric',
+                    month: 'long'
+                });
+                contenedorHistorial.innerHTML += `
+                    <div class="partido-card proximo">
+                        <span class="partido-equipo local">${localNombre}</span>
+                        <div class="partido-info-future">
+                            <span class="partido-fecha">📅 ${fechaFormateada}</span>
+                            <span class="partido-hora">🕐 ${p.hora || '--:--'}</span>
+                        </div>
+                        <span class="partido-equipo visitante">${visitNombre}</span>
+                    </div>`;
+            });
+        }
+        
+        if (partidosJugados.length === 0 && partidosProximos.length === 0) {
+            contenedorHistorial.innerHTML = '<p class="text-center">No hay partidos registrados para este equipo</p>';
         }
     }
+}
+
+// ========== GOLEADORAS ==========
+function renderizarTopGoleadores() {
+    let goleadores = {};
+    dbPartidos.forEach(p => {
+        if (!p.jugado) return;
+        p.eventos.goles.forEach(gol => {
+            if (!goleadores[gol.jugadora]) {
+                goleadores[gol.jugadora] = { 
+                    nombre: gol.jugadora, 
+                    equipoId: gol.equipo, 
+                    goles: 0 
+                };
+            }
+            goleadores[gol.jugadora].goles++;
+        });
+    });
+
+    const lista = Object.values(goleadores).sort((a, b) => b.goles - a.goles).slice(0, 10);
+    const tbody = document.getElementById('tabla-goleadoras-body');
+    tbody.innerHTML = '';
+    
+    if (lista.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" class="text-center">No hay goles registrados</td></tr>';
+        return;
+    }
+    
+    lista.forEach((jug, idx) => {
+        const equipoNombre = obtenerNombreEquipo(jug.equipoId);
+        tbody.innerHTML += `
+            <tr>
+                <td><strong>${idx + 1}</strong></td>
+                <td class="text-left">${jug.nombre}</td>
+                <td>${equipoNombre}</td>
+                <td><strong>${jug.goles}</strong></td>
+            </tr>`;
+    });
+}
+
+async function initGoleadoras() {
+    const ligaId = localStorage.getItem('liga_activa_id');
+    const ligaNombre = localStorage.getItem('liga_activa_nombre') || 'Torneo';
+    if (!ligaId) { 
+        window.location.href = 'index.html'; 
+        return; 
+    }
+
+    document.getElementById('torneo-titulo-goleadoras').textContent = `🏆 ${ligaNombre}`;
+    await cargarEquipos(ligaId);
+    await cargarPartidos(ligaId);
+    renderizarTopGoleadores();
 }

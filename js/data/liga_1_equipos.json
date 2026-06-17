@@ -1,0 +1,24 @@
+{
+  "equipos": [
+    {
+      "id": "eq_01",
+      "nombre": "Cazabombas"
+    },
+    {
+      "id": "eq_02",
+      "nombre": "Las papeins"
+    },
+    {
+      "id": "eq_03",
+      "nombre": "Amistosos FC"
+    },
+    {
+      "id": "eq_04",
+      "nombre": "No sabemos"
+    },
+    {
+      "id": "eq_05",
+      "nombre": "NOVA FC"
+    }
+  ]
+}

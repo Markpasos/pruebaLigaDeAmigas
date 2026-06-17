@@ -1,0 +1,55 @@
+{
+  "planteles": {
+    "eq_01": [
+      "Emilse Arakaki",
+      "Eugenia Raposo",
+      "Natalia Krimker",
+      "Andrea Perez",
+      "Yamila Rojas",
+      "Eliana Vidal",
+      "Elena Milanese",
+      "Malena Barrios",
+      "Mercedes Lema"
+    ],
+    "eq_02": [
+      "Brenda",
+      "Jazmin",
+      "Flor",
+      "Mily",
+      "Daiana",
+      "Belen",
+      "Belu",
+      "Noelia",
+      "Romina",
+      "Pilar"
+    ],
+    "eq_03": [
+      "Antonella Colombo",
+      "Ashly Lujan",
+      "Romina Canepa",
+      "Flor Giurleo",
+      "Lucia Rivero",
+      "Araceli Aquino",
+      "Silvina Mango",
+      "Mercedes Pichipil",
+      "Mía Forster",
+      "Ema Forster"
+    ],
+    "eq_04": [
+      "Fátima (RDJ)",
+      "Vale (RDJ)",
+      "Sofi L (RDJ)",
+      "Vane (RDJ)",
+      "Emma (Amiga Jose)",
+      "Eluney (Amiga Jose)",
+      "Jose Falcón"
+    ],
+    "eq_05": [
+      "Celeste",
+      "Agustina",
+      "Antonella",
+      "Anabella",
+      "Gabriela"
+    ]
+  }  
+}

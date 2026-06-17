@@ -366,3 +366,129 @@ footer {
     opacity: 0.8;
     border-color: var(--text-muted);
 }
+
+/* Estilos para el fixture completo */
+.partido-card.jugado {
+    border-left: 4px solid var(--accent);
+}
+
+.partido-card.proximo {
+    border-left: 4px solid #f59e0b;
+    opacity: 0.9;
+}
+
+.partido-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    min-width: 120px;
+}
+
+.partido-hora {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.partido-cancha {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* Estilos para el historial del equipo */
+.historial-subtitulo {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin: 15px 0 10px 0;
+    padding-bottom: 5px;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.historial-subtitulo:first-of-type {
+    margin-top: 0;
+}
+
+.partido-info-future {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    min-width: 120px;
+}
+
+.partido-fecha {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* Para pantallas pequeñas */
+@media (max-width: 600px) {
+    .partido-card {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px 15px;
+    }
+    
+    .partido-equipo.local,
+    .partido-equipo.visitante {
+        flex: 0 0 100%;
+        text-align: center !important;
+    }
+    
+    .partido-info,
+    .partido-info-future {
+        min-width: auto;
+        flex-direction: row;
+        gap: 15px;
+    }
+    
+    .partido-resultado {
+        margin: 5px 0;
+    }
+}
+/* En styles.css */
+
+.ubicacion-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.2s ease;
+    display: inline-block;
+}
+
+.ubicacion-link:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+}
+
+.partido-cancha {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.partido-info,
+.partido-info-future {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    min-width: 120px;
+}
+
+.partido-hora {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* Para pantallas pequeñas */
+@media (max-width: 600px) {
+    .partido-info,
+    .partido-info-future {
+        min-width: auto;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px 15px;
+    }
+}

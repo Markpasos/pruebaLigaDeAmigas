@@ -12,8 +12,16 @@
             <h1 id="torneo-titulo">🏆 Torneo</h1>
             <nav>
                 <a href="index.html" class="nav-link">Cambiar Liga</a>
-                <a href="posiciones.html" class="nav-link active">Posiciones</a>
-                <a href="equipos.html" class="nav-link">Equipos y Goleadores</a>
+                <div class="dropdown">
+                    <button class="dropdown-btn nav-link active">
+                        📋 Posiciones ▾
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="posiciones.html" class="dropdown-item active">📋 Posiciones</a>
+                        <a href="goleadoras.html" class="dropdown-item">⚽ Goleadoras</a>
+                    </div>
+                </div>
+                <a href="equipos.html" class="nav-link">Equipos</a>
             </nav>
         </div>
     </header>
@@ -46,7 +54,7 @@
             </div>
         </section>
         <section class="section-card mt-2">
-            <h2>📅 Fixture Completo</h2>
+            <h2>📅 Fixture</h2>
             <div id="fixture-container"></div>
         </section>
     </main>

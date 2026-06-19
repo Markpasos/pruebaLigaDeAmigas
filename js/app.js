@@ -195,75 +195,183 @@ function renderizarFixtureCompleto() {
         return;
     }
 
+    // Separar partidos en próximos y jugados
+    let partidosProximos = [];
+    let partidosJugados = [];
+
     dbFixture.forEach(fecha => {
-        const fechaObj = new Date(fecha.partidos[0].fecha);
-        const fechaFormateada = fechaObj.toLocaleDateString('es-AR', {
-            weekday: 'long',
-            day: 'numeric',
-            month: 'long'
-        });
-        
-        let htmlFecha = `
-            <div class="fecha-bloque">
-                <div class="fecha-titulo">📅 Fecha ${fecha.numero} - ${fechaFormateada}</div>
-        `;
-        
         fecha.partidos.forEach(p => {
-            const localNombre = obtenerNombreEquipo(p.equipo_local);
-            const visitNombre = obtenerNombreEquipo(p.equipo_visitante);
-            
-            let resultadoHTML = '';
-            
             if (p.jugado) {
-                const partido = dbPartidos.find(part => 
+                // Buscar los detalles del partido jugado (goles)
+                const partidoDetalle = dbPartidos.find(part => 
                     part.equipo_local === p.equipo_local && 
                     part.equipo_visitante === p.equipo_visitante &&
                     part.jugado === true
                 );
-                
-                if (partido) {
-                    let golesLocal = 0, golesVisit = 0;
-                    partido.eventos.goles.forEach(gol => {
-                        if (gol.equipo === p.equipo_local) golesLocal++;
-                        else if (gol.equipo === p.equipo_visitante) golesVisit++;
-                    });
-                    resultadoHTML = `<span class="partido-resultado">${golesLocal} - ${golesVisit}</span>`;
-                } else {
-                    resultadoHTML = `<span class="partido-resultado">vs</span>`;
-                }
+                partidosJugados.push({
+                    ...p,
+                    numeroFecha: fecha.numero,
+                    fechaObj: crearFechaLocal(p.fecha),
+                    detalle: partidoDetalle
+                });
             } else {
-                // Crear enlace a Google Maps si existe ubicacion
-                let ubicacionHTML = '';
-                if (p.ubicacion) {
-                    ubicacionHTML = `
-                        <a href="${p.ubicacion}" target="_blank" class="ubicacion-link" title="Ver en Google Maps">📍
-                             ${p.cancha || 'Por definir'}
-                        </a>
-                    `;
-                } else {
-                    ubicacionHTML = `<span class="partido-cancha"> ${p.cancha || 'Por definir'}</span>`;
-                }
-                
-                resultadoHTML = `
-                    <div class="partido-info">
+                partidosProximos.push({
+                    ...p,
+                    numeroFecha: fecha.numero,
+                    fechaObj: crearFechaLocal(p.fecha)
+                });
+            }
+        });
+    });
+
+    // Ordenar próximos por fecha (más cercano primero)
+    partidosProximos.sort((a, b) => a.fechaObj - b.fechaObj);
+    
+    // Ordenar jugados por fecha (más antiguo primero)
+    partidosJugados.sort((a, b) => a.fechaObj - b.fechaObj);
+
+    let htmlTotal = '';
+
+    // ========== SECCIÓN: PRÓXIMOS PARTIDOS ==========
+    htmlTotal += `
+        <div class="seccion-fixture">
+            <div class="seccion-titulo proximos-titulo">
+                ⏳ PRÓXIMA FECHA
+            </div>
+    `;
+
+    if (partidosProximos.length > 0) {
+        // Agrupar próximos por fecha
+        const fechasProximas = {};
+        partidosProximos.forEach(p => {
+            const key = p.fechaObj.toISOString().split('T')[0];
+            if (!fechasProximas[key]) {
+                fechasProximas[key] = {
+                    fechaObj: p.fechaObj,
+                    partidos: []
+                };
+            }
+            fechasProximas[key].partidos.push(p);
+        });
+
+        // Mostrar solo la primera fecha próxima
+        const primeraFecha = Object.values(fechasProximas)[0];
+        const fechaFormateada = primeraFecha.fechaObj.toLocaleDateString('es-AR', {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
+
+        htmlTotal += `
+            <div class="fecha-bloque proximo">
+                <div class="fecha-titulo">📅 ${fechaFormateada}</div>
+        `;
+
+        primeraFecha.partidos.forEach(p => {
+            const localNombre = obtenerNombreEquipo(p.equipo_local);
+            const visitNombre = obtenerNombreEquipo(p.equipo_visitante);
+            
+            // Generar el HTML de la ubicación (con o sin enlace)
+            let ubicacionHTML = '';
+            if (p.ubicacion) {
+                ubicacionHTML = `
+                    <a href="${p.ubicacion}" target="_blank" class="ubicacion-link" title="Ver en Google Maps">
+                        📍 ${p.cancha || 'Por definir'}
+                    </a>
+                `;
+            } else {
+                ubicacionHTML = `<span class="partido-cancha">📍 ${p.cancha || 'Por definir'}</span>`;
+            }
+            
+            htmlTotal += `
+                <div class="partido-card proximo">
+                    <span class="partido-equipo local">${localNombre}</span>
+                    <div class="partido-info-future">
                         <span class="partido-hora">🕐 ${p.hora || '--:--'}</span>
                         ${ubicacionHTML}
                     </div>
-                `;
-            }
-            
-            htmlFecha += `
-                <div class="partido-card ${p.jugado ? 'jugado' : 'proximo'}">
-                    <span class="partido-equipo local">${localNombre}</span>
-                    ${resultadoHTML}
                     <span class="partido-equipo visitante">${visitNombre}</span>
                 </div>
             `;
         });
-        
-        htmlFecha += `</div>`;
-        contenedor.innerHTML += htmlFecha;
-    });
+
+        htmlTotal += `</div>`;
+    } else {
+        htmlTotal += `<p class="text-center">No hay partidos próximos programados</p>`;
+    }
+
+    htmlTotal += `</div>`;
+
+    // ========== SECCIÓN: PARTIDOS JUGADOS ==========
+    htmlTotal += `
+        <div class="seccion-fixture mt-3">
+            <div class="seccion-titulo jugados-titulo">
+                📊 PARTIDOS JUGADOS
+            </div>
+    `;
+
+    if (partidosJugados.length > 0) {
+        // Agrupar jugados por fecha
+        const fechasJugadas = {};
+        partidosJugados.forEach(p => {
+            const key = p.fechaObj.toISOString().split('T')[0];
+            if (!fechasJugadas[key]) {
+                fechasJugadas[key] = {
+                    fechaObj: p.fechaObj,
+                    partidos: []
+                };
+            }
+            fechasJugadas[key].partidos.push(p);
+        });
+
+        // Mostrar todas las fechas jugadas (más antiguas primero)
+        const fechasOrdenadas = Object.values(fechasJugadas).sort((a, b) => a.fechaObj - b.fechaObj);
+
+        fechasOrdenadas.forEach(fecha => {
+            const fechaFormateada = fecha.fechaObj.toLocaleDateString('es-AR', {
+                weekday: 'long',
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+
+            htmlTotal += `
+                <div class="fecha-bloque jugado">
+                    <div class="fecha-titulo">📅 ${fechaFormateada}</div>
+            `;
+
+            fecha.partidos.forEach(p => {
+                const localNombre = obtenerNombreEquipo(p.equipo_local);
+                const visitNombre = obtenerNombreEquipo(p.equipo_visitante);
+                
+                let golesLocal = 0, golesVisit = 0;
+                if (p.detalle) {
+                    p.detalle.eventos.goles.forEach(gol => {
+                        if (gol.equipo === p.equipo_local) golesLocal++;
+                        else if (gol.equipo === p.equipo_visitante) golesVisit++;
+                    });
+                }
+
+                htmlTotal += `
+                    <div class="partido-card jugado">
+                        <span class="partido-equipo local">${localNombre}</span>
+                        <span class="partido-resultado">${golesLocal} - ${golesVisit}</span>
+                        <span class="partido-equipo visitante">${visitNombre}</span>
+                    </div>
+                `;
+            });
+
+            htmlTotal += `</div>`;
+        });
+    } else {
+        htmlTotal += `<p class="text-center">No hay partidos jugados aún</p>`;
+    }
+
+    htmlTotal += `</div>`;
+
+    // Insertar todo
+    contenedor.innerHTML = htmlTotal;
 }
 
 // ========== PÁGINA EQUIPOS ==========
@@ -404,7 +512,7 @@ function renderizarFichaEquipo(equipoId) {
             partidosProximos.forEach(p => {
                 const localNombre = obtenerNombreEquipo(p.equipo_local);
                 const visitNombre = obtenerNombreEquipo(p.equipo_visitante);
-                const fechaObj = new Date(p.fecha);
+                const fechaObj = crearFechaLocal(p.fecha);
                 const fechaFormateada = fechaObj.toLocaleDateString('es-AR', {
                     day: 'numeric',
                     month: 'long'
@@ -477,4 +585,11 @@ async function initGoleadoras() {
     await cargarEquipos(ligaId);
     await cargarPartidos(ligaId);
     renderizarTopGoleadores();
+}
+
+//Crea fecha con hora local.
+function crearFechaLocal(fechaStr) {
+    const partes = fechaStr.split('-');
+    // año, mes (0-indexado), día
+    return new Date(partes[0], partes[1] - 1, partes[2]);
 }

@@ -4,7 +4,7 @@
       "fecha": 1,
       "equipo_local": "eq_01",
       "equipo_visitante": "eq_05",
-      "jugado": true,
+      "jugado": false,
       "eventos": {
         "goles": [
           { "jugadora": "Emilse Arakaki", "equipo": "eq_01" }
@@ -18,7 +18,7 @@
       "fecha": 1,
       "equipo_local": "eq_02",
       "equipo_visitante": "eq_04",
-      "jugado": true,
+      "jugado": false,
       "eventos": {
         "goles": [
           { "jugadora": "Brenda", "equipo": "eq_02" },

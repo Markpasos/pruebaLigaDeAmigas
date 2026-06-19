@@ -32,7 +32,7 @@ body {
     padding: 0 20px;
 }
 
-/* Header & Nav */
+/* ==================== HEADER & NAV ==================== */
 header {
     background-color: var(--bg-card);
     border-bottom: 1px solid var(--border-color);
@@ -54,6 +54,7 @@ h1 {
 
 nav {
     display: flex;
+    align-items: center;
     gap: 10px;
 }
 
@@ -66,7 +67,8 @@ nav {
     transition: all 0.2s ease;
 }
 
-.nav-link:hover, .nav-link.active {
+.nav-link:hover,
+.nav-link.active {
     color: var(--text-main);
     background-color: var(--border-color);
 }
@@ -75,7 +77,7 @@ nav {
     border-left: 3px solid var(--accent);
 }
 
-/* Main layouts */
+/* ==================== MAIN LAYOUTS ==================== */
 main {
     flex: 1;
     padding: 30px 0;
@@ -99,7 +101,7 @@ main {
     }
 }
 
-/* Componentes */
+/* ==================== COMPONENTES ==================== */
 .welcome-box {
     background-color: var(--bg-card);
     padding: 40px;
@@ -130,7 +132,7 @@ main {
     padding-bottom: 10px;
 }
 
-/* Controles de Formulario */
+/* ==================== CONTROLES ==================== */
 .selector-container {
     display: flex;
     flex-direction: column;
@@ -172,7 +174,7 @@ select {
     background-color: var(--accent-hover);
 }
 
-/* Tablas */
+/* ==================== TABLAS ==================== */
 .table-responsive {
     overflow-x: auto;
 }
@@ -184,7 +186,8 @@ select {
     font-size: 0.95rem;
 }
 
-.table-stats th, .table-stats td {
+.table-stats th,
+.table-stats td {
     padding: 12px 10px;
     text-align: center;
     border-bottom: 1px solid var(--border-color);
@@ -206,15 +209,27 @@ select {
     background-color: var(--row-hover);
 }
 
-.text-left { text-align: left !important; }
-.text-center { text-align: center !important; }
-.mt-2 { margin-top: 20px; }
+.text-left {
+    text-align: left !important;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.mt-2 {
+    margin-top: 20px;
+}
+
+.mt-3 {
+    margin-top: 2rem;
+}
 
 .highlighted-table th {
     background-color: rgba(14, 165, 233, 0.1);
 }
 
-/* Footer */
+/* ==================== FOOTER ==================== */
 footer {
     text-align: center;
     padding: 20px;
@@ -223,45 +238,8 @@ footer {
     border-top: 1px solid var(--border-color);
     background-color: var(--bg-card);
 }
-/* Estilos para el Fixture y Partidos */
-.fecha-bloque {
-    margin-bottom: 20px;
-}
-.fecha-titulo {
-    font-size: 1.1rem;
-    color: var(--accent);
-    margin-bottom: 10px;
-    border-bottom: 1px dashed var(--border-color);
-    padding-bottom: 5px;
-}
-.partido-card {
-    background-color: var(--bg-main);
-    border: 1px solid var(--border-color);
-    padding: 12px 20px;
-    border-radius: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-}
-.partido-equipo {
-    flex: 1;
-    font-size: 1rem;
-}
-.partido-equipo.local { text-align: right; }
-.partido-equipo.visitante { text-align: left; }
-.partido-resultado {
-    background-color: var(--border-color);
-    padding: 6px 15px;
-    border-radius: 20px;
-    font-weight: bold;
-    min-width: 70px;
-    text-align: center;
-    margin: 0 15px;
-    font-size: 1.1rem;
-}
 
-/* Estilos para imágenes de equipos */
+/* ==================== EQUIPOS - BANNER Y PERFIL ==================== */
 .equipo-banner {
     width: 100%;
     height: 200px;
@@ -296,8 +274,16 @@ footer {
     border-radius: 50%;
     object-fit: cover;
     border: 4px solid var(--accent);
-    background-color: var(--bg-main);
+    background-color: var(--bg-card);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.equipo-foto-circular[src*="default"] {
+    opacity: 0.8;
+    border-color: var(--text-muted);
 }
 
 .equipo-info {
@@ -315,66 +301,52 @@ footer {
     color: var(--text-muted);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .equipo-banner {
-        height: 150px;
-    }
-    
-    .equipo-foto-circular {
-        width: 70px;
-        height: 70px;
-    }
-    
-    .equipo-nombre {
-        font-size: 1.3rem;
-    }
-    
-    .equipo-perfil {
-        gap: 15px;
-    }
+/* ==================== PARTIDOS Y FIXTURE (BASE) ==================== */
+.fecha-bloque {
+    margin-bottom: 20px;
 }
 
-@media (max-width: 480px) {
-    .equipo-perfil {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .selector-container-inline {
-        justify-content: center;
-    }
+.fecha-titulo {
+    font-size: 1.1rem;
+    color: var(--accent);
+    margin-bottom: 10px;
+    border-bottom: 1px dashed var(--border-color);
+    padding-bottom: 5px;
 }
 
-.equipo-foto-circular {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid var(--accent);
+.partido-card {
     background-color: var(--bg-main);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    /* Fondo de respaldo mientras carga o si falla */
-    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 12px 20px;
+    border-radius: 8px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
+    margin-bottom: 10px;
 }
 
-/* Opcional: mostrar un ícono si no hay imagen */
-.equipo-foto-circular[src*="default"] {
-    opacity: 0.8;
-    border-color: var(--text-muted);
+.partido-equipo {
+    flex: 1;
+    font-size: 1rem;
 }
 
-/* Estilos para el fixture completo */
-.partido-card.jugado {
-    border-left: 4px solid var(--accent);
+.partido-equipo.local {
+    text-align: right;
 }
 
-.partido-card.proximo {
-    border-left: 4px solid #f59e0b;
-    opacity: 0.9;
+.partido-equipo.visitante {
+    text-align: left;
+}
+
+.partido-resultado {
+    background-color: var(--border-color);
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    min-width: 70px;
+    text-align: center;
+    margin: 0 15px;
+    font-size: 1.1rem;
 }
 
 .partido-info {
@@ -383,6 +355,15 @@ footer {
     align-items: center;
     gap: 4px;
     min-width: 120px;
+}
+
+.partido-info-future {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
 }
 
 .partido-hora {
@@ -394,60 +375,6 @@ footer {
     font-size: 0.75rem;
     color: var(--text-muted);
 }
-
-/* Estilos para el historial del equipo */
-.historial-subtitulo {
-    font-size: 1rem;
-    color: var(--text-muted);
-    margin: 15px 0 10px 0;
-    padding-bottom: 5px;
-    border-bottom: 1px dashed var(--border-color);
-}
-
-.historial-subtitulo:first-of-type {
-    margin-top: 0;
-}
-
-.partido-info-future {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    min-width: 120px;
-}
-
-.partido-fecha {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-}
-
-/* Para pantallas pequeñas */
-@media (max-width: 600px) {
-    .partido-card {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 8px;
-        padding: 12px 15px;
-    }
-    
-    .partido-equipo.local,
-    .partido-equipo.visitante {
-        flex: 0 0 100%;
-        text-align: center !important;
-    }
-    
-    .partido-info,
-    .partido-info-future {
-        min-width: auto;
-        flex-direction: row;
-        gap: 15px;
-    }
-    
-    .partido-resultado {
-        margin: 5px 0;
-    }
-}
-/* En styles.css */
 
 .ubicacion-link {
     color: var(--accent);
@@ -462,33 +389,508 @@ footer {
     text-decoration: underline;
 }
 
-.partido-cancha {
-    font-size: 0.85rem;
-    color: var(--text-muted);
+/* ==================== FIXTURE REORGANIZADO (POSICIONES) ==================== */
+.seccion-fixture {
+    margin-top: 1.5rem;
 }
 
-.partido-info,
-.partido-info-future {
+.seccion-titulo {
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: var(--text-main);
+}
+
+.proximos-titulo {
+    background: rgba(245, 158, 11, 0.15);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    color: #fbbf24;
+}
+
+.jugados-titulo {
+    background: rgba(14, 165, 233, 0.15);
+    border: 1px solid rgba(14, 165, 233, 0.3);
+    color: var(--accent);
+}
+
+.fecha-bloque.proximo {
+    border-left: 3px solid #f59e0b;
+    background: rgba(245, 158, 11, 0.05);
+    padding-left: 12px;
+    border-radius: 4px;
+}
+
+.fecha-bloque.jugado {
+    border-left: 3px solid var(--accent);
+    background: rgba(14, 165, 233, 0.05);
+    padding-left: 12px;
+    border-radius: 4px;
+}
+
+.fecha-bloque .fecha-titulo {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.partido-card.proximo {
+    background: rgba(245, 158, 11, 0.08);
+    border: 1px solid rgba(245, 158, 11, 0.15);
+}
+
+.partido-card.jugado {
+    background: rgba(14, 165, 233, 0.05);
+    border: 1px solid rgba(14, 165, 233, 0.1);
+}
+
+/* ==================== RECUADROS PARA FECHA Y LUGAR ==================== */
+.partido-card.proximo .partido-info-future {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
-    min-width: 120px;
+    justify-content: center;
+    gap: 2px;
+    min-width: 130px;
+    padding: 6px 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(245, 158, 11, 0.25);
+    border-radius: 8px;
+    margin: 0 10px;
 }
 
-.partido-hora {
+.partido-card.proximo .partido-info-future .partido-hora {
     font-size: 0.85rem;
+    color: #fbbf24;
+    font-weight: 500;
+}
+
+.partido-card.proximo .partido-info-future .partido-cancha {
+    font-size: 0.75rem;
     color: var(--text-muted);
 }
 
-/* Para pantallas pequeñas */
+.partido-card.jugado .partido-resultado {
+    background-color: var(--border-color);
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-weight: 700;
+    min-width: 70px;
+    text-align: center;
+    margin: 0 15px;
+    font-size: 1.1rem;
+    color: var(--text-main);
+}
+
+/* ==================== HISTORIAL DE EQUIPOS ==================== */
+.historial-subtitulo {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin: 15px 0 10px 0;
+    padding-bottom: 5px;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.historial-subtitulo:first-of-type {
+    margin-top: 0;
+}
+
+.seccion-equipo-historial {
+    margin-top: 1.5rem;
+}
+
+.seccion-titulo-equipo {
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: var(--text-main);
+}
+
+.seccion-titulo-equipo.proximos-titulo {
+    background: rgba(245, 158, 11, 0.12);
+    border: 1px solid rgba(245, 158, 11, 0.25);
+    color: #fbbf24;
+}
+
+.seccion-titulo-equipo.jugados-titulo {
+    background: rgba(14, 165, 233, 0.12);
+    border: 1px solid rgba(14, 165, 233, 0.25);
+    color: var(--accent);
+}
+
+.fecha-bloque-equipo {
+    margin-bottom: 1rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+}
+
+.fecha-bloque-equipo.proximo {
+    background: rgba(245, 158, 11, 0.05);
+    border-left: 3px solid #f59e0b;
+}
+
+.fecha-bloque-equipo.jugado {
+    background: rgba(14, 165, 233, 0.05);
+    border-left: 3px solid var(--accent);
+}
+
+.fecha-titulo-equipo {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    padding: 0.25rem 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.partido-card-equipo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.75rem;
+    background: var(--bg-main);
+    border-radius: 6px;
+    margin-bottom: 0.4rem;
+    border: 1px solid var(--border-color);
+    gap: 0.5rem;
+}
+
+.partido-card-equipo.proximo {
+    border-color: rgba(245, 158, 11, 0.2);
+}
+
+.partido-card-equipo.jugado {
+    border-color: rgba(14, 165, 233, 0.2);
+}
+
+.partido-card-equipo .partido-equipo {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-main);
+}
+
+.partido-card-equipo .partido-resultado {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--accent);
+}
+
+.partido-card-equipo .partido-info-future {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.partido-card-equipo .partido-cancha {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+}
+
+.partido-card-equipo.proximo .partido-info-future {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    min-width: 110px;
+    padding: 4px 12px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(245, 158, 11, 0.25);
+    border-radius: 8px;
+    margin: 0 8px;
+}
+
+.partido-card-equipo.proximo .partido-info-future .partido-hora {
+    font-size: 0.8rem;
+    color: #fbbf24;
+    font-weight: 500;
+}
+
+.partido-card-equipo.proximo .partido-info-future .partido-cancha {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.partido-card-equipo.jugado .partido-resultado {
+    background-color: var(--border-color);
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-weight: 700;
+    min-width: 60px;
+    text-align: center;
+    margin: 0 10px;
+    font-size: 0.95rem;
+    color: var(--text-main);
+}
+
+/* ==================== DROPDOWN MENU ==================== */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.95rem;
+    padding: 8px 16px;
+    border-radius: 6px;
+    color: var(--text-muted);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-family: inherit;
+}
+
+.dropdown-btn:hover {
+    color: var(--text-main);
+    background-color: var(--border-color);
+}
+
+.dropdown-btn.active {
+    color: var(--text-main);
+    background-color: var(--border-color);
+    border-left: 3px solid var(--accent);
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: calc(100% + 2px);
+    left: 0;
+    min-width: 180px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    z-index: 9999;
+    padding: 6px 0;
+}
+
+.dropdown-content .dropdown-item {
+    display: block;
+    padding: 10px 20px;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: all 0.15s ease;
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+
+.dropdown-content .dropdown-item:hover {
+    background-color: var(--row-hover);
+    color: var(--text-main);
+}
+
+.dropdown-content .dropdown-item.active {
+    color: var(--accent);
+    background-color: rgba(14, 165, 233, 0.1);
+    border-left: 3px solid var(--accent);
+}
+
+/* Mostrar dropdown al hacer hover */
+.dropdown:hover .dropdown-content,
+.dropdown-content:hover {
+    display: block !important;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+    .equipo-banner {
+        height: 150px;
+    }
+
+    .equipo-foto-circular {
+        width: 70px;
+        height: 70px;
+    }
+
+    .equipo-nombre {
+        font-size: 1.3rem;
+    }
+
+    .equipo-perfil {
+        gap: 15px;
+    }
+}
+
 @media (max-width: 600px) {
+    .partido-card {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px 15px;
+    }
+
+    .partido-equipo.local,
+    .partido-equipo.visitante {
+        flex: 0 0 100%;
+        text-align: center !important;
+    }
+
     .partido-info,
     .partido-info-future {
         min-width: auto;
         flex-direction: row;
+        gap: 15px;
+    }
+
+    .partido-resultado {
+        margin: 5px 0;
+    }
+
+    .partido-card-equipo {
         flex-wrap: wrap;
+        padding: 0.5rem;
+    }
+
+    .partido-card-equipo .partido-info-future {
+        width: 100%;
+        flex-direction: row;
         justify-content: center;
-        gap: 8px 15px;
+        gap: 0.5rem;
+        margin: 0.15rem 0;
+    }
+
+    .partido-card-equipo .partido-equipo {
+        font-size: 0.75rem;
+    }
+
+    .partido-card.proximo .partido-info-future {
+        min-width: auto;
+        padding: 4px 10px;
+        margin: 4px 0;
+        flex-direction: row;
+        gap: 8px;
+        width: 100%;
+    }
+
+    .partido-card-equipo.proximo .partido-info-future {
+        min-width: auto;
+        padding: 4px 8px;
+        margin: 4px 0;
+        flex-direction: row;
+        gap: 8px;
+        width: 100%;
+    }
+
+    .partido-card.proximo .partido-info-future .partido-hora,
+    .partido-card-equipo.proximo .partido-info-future .partido-hora {
+        font-size: 0.75rem;
+    }
+
+    .partido-card.proximo .partido-info-future .partido-cancha,
+    .partido-card-equipo.proximo .partido-info-future .partido-cancha {
+        font-size: 0.7rem;
+    }
+
+    /* Dropdown responsive */
+    .dropdown-content {
+        position: static;
+        width: 100%;
+        min-width: auto;
+        box-shadow: none;
+        border: none;
+        border-radius: 0;
+        background-color: transparent;
+        padding: 0;
+        margin: 0;
+        display: none !important;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block !important;
+    }
+
+    .dropdown-content .dropdown-item {
+        padding: 8px 16px 8px 32px;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+    }
+
+    .dropdown-content .dropdown-item:hover {
+        background-color: var(--row-hover);
+        color: var(--text-main);
+    }
+
+    .dropdown-btn {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .equipo-perfil {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .selector-container-inline {
+        justify-content: center;
+    }
+
+    nav {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 5px;
+        width: 100%;
+    }
+
+    .dropdown {
+        width: 100%;
+    }
+
+    .dropdown-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .nav-link {
+        text-align: center;
+        width: 100%;
+    }
+}
+
+/* ==================== FIX DEFINITIVO PARA DROPDOWN ==================== */
+/* Eliminar cualquier padding que pueda interrumpir el hover */
+.dropdown {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Crear un puente invisible entre el botón y el dropdown */
+.dropdown-content {
+    margin-top: 0 !important;
+    padding-top: 6px !important;
+    top: 100% !important;
+}
+
+/* Asegurar que el hover funcione correctamente */
+.dropdown:hover .dropdown-content {
+    display: block !important;
+}
+
+/* El contenido del dropdown también mantiene el hover */
+.dropdown-content:hover {
+    display: block !important;
+}
+
+/* Para móviles */
+@media (max-width: 600px) {
+    .dropdown-content {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+        position: static !important;
     }
 }

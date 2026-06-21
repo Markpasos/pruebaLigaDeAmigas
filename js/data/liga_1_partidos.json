@@ -4,13 +4,21 @@
       "fecha": 1,
       "equipo_local": "eq_01",
       "equipo_visitante": "eq_05",
-      "jugado": false,
+      "jugado": true,
       "eventos": {
         "goles": [
-          { "jugadora": "Emilse Arakaki", "equipo": "eq_01" }
+          { "jugadora": "Emilse Arakaki", "equipo": "eq_01" },
+          { "jugadora": "Emilse Arakaki", "equipo": "eq_01" },
+          { "jugadora": "Emilse Arakaki", "equipo": "eq_01" },
+          { "jugadora": "Emilse Arakaki", "equipo": "eq_01" },
+          { "jugadora": "Emilse Arakaki", "equipo": "eq_01" },
+          { "jugadora": "Emilse Arakaki", "equipo": "eq_01" },
+          { "jugadora": "Emilse Arakaki", "equipo": "eq_01" },
+          { "jugadora": "Natalia Krimker", "equipo": "eq_01" },
+          { "jugadora": "Natalia Krimker", "equipo": "eq_01" },
+          { "jugadora": "Mercedes Lema", "equipo": "eq_01" }
         ],
         "tarjetas": [
-          { "jugadora": "Agustina", "equipo": "eq_02", "tipo": "amarilla" }
         ]
       }
     },
@@ -18,14 +26,16 @@
       "fecha": 1,
       "equipo_local": "eq_02",
       "equipo_visitante": "eq_04",
-      "jugado": false,
+      "jugado": true,
       "eventos": {
         "goles": [
-          { "jugadora": "Brenda", "equipo": "eq_02" },
-          { "jugadora": "Jose Falcón", "equipo": "eq_04"}
+          { "jugadora": "Mily Papein", "equipo": "eq_02" },
+          { "jugadora": "Pilu Romero", "equipo": "eq_02" },
+          { "jugadora": "Mica Torres", "equipo": "eq_02" },
+          { "jugadora": "Laura Villaba", "equipo": "eq_04"},
+          { "jugadora": "Laura Villaba", "equipo": "eq_04"}
         ],
         "tarjetas": [
-          { "jugadora": "Jose Falcón", "equipo": "eq_04", "tipo": "amarilla" }
         ]
       }
     }

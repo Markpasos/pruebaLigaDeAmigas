@@ -240,13 +240,18 @@ footer {
 }
 
 /* ==================== EQUIPOS - BANNER Y PERFIL ==================== */
+
 .equipo-banner {
     width: 100%;
-    height: 80vh;
-    background-size: cover;
+    /* Reemplaza el height fijo por una proporción (ej. ancho 16 y alto 9, o 21/9 si es muy panorámica) */
+    aspect-ratio: 16 / 9; 
+    max-height: 70vh; /* Evita que en monitores gigantes se haga infinitamente alta */
+    
+    background-size: contain; /* Cambiado de cover a contain para mostrar la imagen COMPLETA */
     background-position: center;
     background-repeat: no-repeat;
     position: relative;
+    background-color: var(--bg-main); /* Un fondo de respaldo por si quedan barras vacías a los lados */
 }
 
 .banner-overlay {
@@ -704,9 +709,9 @@ footer {
 
 /* ==================== RESPONSIVE ==================== */
 @media (max-width: 768px) {
-    .equipo-banner {
+    /*.equipo-banner {
         height: 150px;
-    }
+    }*/
 
     .equipo-foto-circular {
         width: 70px;

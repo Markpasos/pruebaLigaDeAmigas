@@ -242,7 +242,7 @@ footer {
 /* ==================== EQUIPOS - BANNER Y PERFIL ==================== */
 .equipo-banner {
     width: 100%;
-    height: 500px;
+    height: 80vh;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

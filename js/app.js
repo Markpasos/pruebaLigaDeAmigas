@@ -398,50 +398,76 @@ async function initEquipos() {
 }
 
 function renderizarFichaEquipo(equipoId) {
+    // ==========================================
+    // 1. VALIDACIÓN Y DATOS BÁSICOS DEL EQUIPO
+    // ==========================================
+    // Busca el equipo en la base de datos por su ID
     const equipo = dbEquipos.find(e => e.id === equipoId);
+    // Si no existe el equipo, corta la ejecución de la función de inmediato
     if (!equipo) return;
     
+    // Inserta el nombre del equipo en el encabezado de la interfaz
     document.getElementById('nombre-equipo-header').textContent = equipo.nombre;
     
-    // Imágenes
+    // ==========================================
+    // 2. CARGA DE IMÁGENES (FOTO Y BANNER)
+    // ==========================================
     const fotoPerfil = document.getElementById('equipo-foto');
     const banner = document.getElementById('equipo-banner');
     
+    // Control de error para la foto de perfil: si falla la ruta, pone una por defecto
     fotoPerfil.onerror = function() { 
         this.src = 'fotos/perfiles/default.png'; 
     };
+    // Intenta cargar la foto dinámica usando el ID del equipo
     fotoPerfil.src = `fotos/perfiles/${equipoId}.png`;
     
+    // Definición de rutas para el banner de fondo
     const bannerUrl = `fotos/portadas/${equipoId}.jpg`;
     const defaultBannerUrl = 'fotos/portadas/default.jpg';
     
+    // Precarga asíncrona de la imagen del banner para evitar parpadeos o "imágenes rotas"
     const testImg = new Image();
     testImg.onload = function() {
+        // Si la imagen existe y carga bien, la aplica como fondo
         banner.style.backgroundImage = `url('${bannerUrl}')`;
     };
     testImg.onerror = function() {
+        // Si la imagen no se encuentra, aplica el banner por defecto
         banner.style.backgroundImage = `url('${defaultBannerUrl}')`;
     };
     testImg.src = bannerUrl;
 
-    // Obtener plantel del equipo
+    // ==========================================
+    // 3. PROCESAMIENTO DE ESTADÍSTICAS DEL PLANTEL
+    // ==========================================
+    // Obtiene el array con los nombres de las jugadoras pertenecientes al equipo
     const plantel = obtenerPlantel(equipoId);
     
-    // Estadísticas de jugadoras
+    // Inicializa un objeto vacío para acumular goles y tarjetas de cada jugadora
     let stats = {};
     plantel.forEach(nombre => {
+        // Estructura base a poner en 0 para cada jugadora del plantel
         stats[nombre] = { goles: 0, amarillas: 0, rojas: 0 };
     });
 
+    // Recorre el histórico global de partidos para calcular las estadísticas en tiempo real
     dbPartidos.forEach(p => {
+        // Si el partido aún no se jugó, lo ignora y salta al siguiente
         if (!p.jugado) return;
+        
+        // Conteo de Goles
         p.eventos.goles.forEach(gol => {
+            // Verifica que el gol sea del equipo consultado y que la jugadora pertenezca al plantel
             if (gol.equipo === equipoId && stats[gol.jugadora] !== undefined) {
                 stats[gol.jugadora].goles++;
             }
         });
+        
+        // Conteo de Tarjetas (Amarillas y Rojas)
         if (p.eventos.tarjetas) {
             p.eventos.tarjetas.forEach(tarjeta => {
+                // Verifica pertenencia de equipo y jugadora registrada antes de sumar
                 if (tarjeta.equipo === equipoId && stats[tarjeta.jugadora] !== undefined) {
                     if (tarjeta.tipo === 'amarilla') stats[tarjeta.jugadora].amarillas++;
                     if (tarjeta.tipo === 'roja') stats[tarjeta.jugadora].rojas++;
@@ -450,13 +476,19 @@ function renderizarFichaEquipo(equipoId) {
         }
     });
 
+    // ==========================================
+    // 4. RENDERIZADO DE LA TABLA DE JUGADORAS
+    // ==========================================
     const tbody = document.getElementById('tabla-plantel-body');
-    tbody.innerHTML = '';
+    tbody.innerHTML = ''; // Limpia filas previas de la tabla
     
+    // Caso: No hay datos cargados en el plantel
     if (!plantel || plantel.length === 0) {
         tbody.innerHTML = '<tr><td colspan="4" class="text-center">No hay jugadoras cargadas</td></tr>';
     } else {
+        // Caso: Renderizado de filas por cada jugadora mapeando sus estadísticas calculadas arriba
         plantel.forEach(nombre => {
+            // Si por alguna razón la jugadora no tiene stats asignadas, usa un objeto en 0 por defecto
             const s = stats[nombre] || { goles: 0, amarillas: 0, rojas: 0 };
             tbody.innerHTML += `
                 <tr>
@@ -468,12 +500,14 @@ function renderizarFichaEquipo(equipoId) {
         });
     }
 
-    // Historial: Partidos jugados + Próximos
+    // ==========================================
+    // 5. SECCIÓN HISTORIAL (HISTÓRICO + PRÓXIMOS)
+    // ==========================================
     const contenedorHistorial = document.getElementById('historial-equipo-container');
     if (contenedorHistorial) {
-        contenedorHistorial.innerHTML = '';
+        contenedorHistorial.innerHTML = ''; // Limpia el contenedor de historial
         
-        // 1. Partidos jugados (desde dbPartidos)
+        // 5.1. Filtrado y renderizado de Partidos Jugados (desde dbPartidos)
         let partidosJugados = dbPartidos.filter(p => 
             (p.equipo_local === equipoId || p.equipo_visitante === equipoId) && p.jugado
         );
@@ -481,13 +515,18 @@ function renderizarFichaEquipo(equipoId) {
         if (partidosJugados.length > 0) {
             contenedorHistorial.innerHTML += `<div class="historial-subtitulo">📊 Partidos Jugados</div>`;
             partidosJugados.forEach(p => {
+                // Convierte IDs de equipos a strings de nombres legibles
                 const localNombre = obtenerNombreEquipo(p.equipo_local);
                 const visitNombre = obtenerNombreEquipo(p.equipo_visitante);
+                
+                // Recalcula el resultado final sumando los goles del evento de ese partido
                 let gLocal = 0, gVisit = 0;
                 p.eventos.goles.forEach(gol => {
                     if (gol.equipo === p.equipo_local) gLocal++;
                     else if (gol.equipo === p.equipo_visitante) gVisit++;
                 });
+                
+                // Inyecta la tarjeta del partido con su resultado final
                 contenedorHistorial.innerHTML += `
                     <div class="partido-card jugado">
                         <span class="partido-equipo local">${localNombre}</span>
@@ -497,11 +536,13 @@ function renderizarFichaEquipo(equipoId) {
             });
         }
 
-        // 2. Próximos partidos (desde fixture)
+        // 5.2. Filtrado y mapeo de Próximos Partidos (desde dbFixture)
         let partidosProximos = [];
         dbFixture.forEach(fecha => {
             fecha.partidos.forEach(p => {
+                // Filtra partidos del equipo que NO estén jugados aún
                 if ((p.equipo_local === equipoId || p.equipo_visitante === equipoId) && !p.jugado) {
+                    // Guarda el partido agregando el número de la fecha del torneo
                     partidosProximos.push({ ...p, fechaNumero: fecha.numero });
                 }
             });
@@ -512,11 +553,15 @@ function renderizarFichaEquipo(equipoId) {
             partidosProximos.forEach(p => {
                 const localNombre = obtenerNombreEquipo(p.equipo_local);
                 const visitNombre = obtenerNombreEquipo(p.equipo_visitante);
+                
+                // Formatea la fecha usando la configuración regional de Argentina (ej: "15 de mayo")
                 const fechaObj = crearFechaLocal(p.fecha);
                 const fechaFormateada = fechaObj.toLocaleDateString('es-AR', {
                     day: 'numeric',
                     month: 'long'
                 });
+                
+                // Inyecta la tarjeta de próximo partido con fecha y hora
                 contenedorHistorial.innerHTML += `
                     <div class="partido-card proximo">
                         <span class="partido-equipo local">${localNombre}</span>
@@ -529,6 +574,7 @@ function renderizarFichaEquipo(equipoId) {
             });
         }
         
+        // 5.3. Estado vacío si el equipo no registra ningún partido de ningún tipo
         if (partidosJugados.length === 0 && partidosProximos.length === 0) {
             contenedorHistorial.innerHTML = '<p class="text-center">No hay partidos registrados para este equipo</p>';
         }

@@ -245,9 +245,9 @@ footer {
     width: 100%;
     /* Reemplaza el height fijo por una proporción (ej. ancho 16 y alto 9, o 21/9 si es muy panorámica) */
     aspect-ratio: 16 / 9; 
-    max-height: 70vh; /* Evita que en monitores gigantes se haga infinitamente alta */
+    max-height: 80vh; /* Evita que en monitores gigantes se haga infinitamente alta */
     
-    background-size: contain; /* Cambiado de cover a contain para mostrar la imagen COMPLETA */
+    background-size: cover; /* Cambiado de cover a contain para mostrar la imagen COMPLETA */
     background-position: center;
     background-repeat: no-repeat;
     position: relative;
@@ -898,3 +898,46 @@ footer {
         position: static !important;
     }
 }
+
+
+
+/*BOTON DE INSTAGRAM*/
+
+        /* El contenedor de tu diseño */
+        .mi-contenedor {
+            padding: 20px;
+            background-color: #f0f2f5;
+            text-align: center;
+            border-radius: 8px;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+
+        /* Estilos para el botón de Instagram */
+        .btn-instagram {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px; /* Espacio entre el logo y el texto */
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-weight: bold;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        /* Efecto al pasar el cursor (hover) */
+        .btn-instagram:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Tamaño del logo SVG */
+        .btn-instagram svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }

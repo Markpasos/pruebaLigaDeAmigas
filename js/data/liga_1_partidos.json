@@ -67,6 +67,32 @@
         "tarjetas": [
         ]
       }
+    },
+    {
+      "fecha": 3,
+      "equipo_local": "eq_03",
+      "equipo_visitante": "eq_02",
+      "jugado": false,
+      "eventos": {
+        "goles": [
+          { "jugadora": "Valeria Bauni", "equipo": "eq_04" }
+        ],
+        "tarjetas": [
+        ]
+      }
+    },
+    {
+      "fecha": 3,
+      "equipo_local": "eq_04",
+      "equipo_visitante": "eq_01",
+      "jugado": false,
+      "eventos": {
+        "goles": [
+          { "jugadora": "Emilse Arakaki", "equipo": "eq_01" }
+        ],
+        "tarjetas": [
+        ]
+      }
     }
   ]
 }

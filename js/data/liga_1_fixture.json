@@ -45,6 +45,29 @@
           "jugado": true
         }
       ]
+    },
+    {
+      "numero": 3,
+      "partidos": [
+        {
+          "equipo_local": "eq_03",
+          "equipo_visitante": "eq_02",
+          "fecha": "2026-06-28",
+          "hora": "15:00",
+          "cancha": "Villa Crespo",
+          "ubicacion": "https://www.google.com/maps/place/El+Predio+-+Villa+Crespo/@-34.5935847,-58.4438968,17z/data=!3m1!4b1!4m6!3m5!1s0x95bcb5f540cc758f:0x40a69ebc509eaa58!8m2!3d-34.5935847!4d-58.4413219!16s%2Fg%2F11c56r_b33?entry=ttu&g_ep=EgoyMDI2MDYxMy4wIKXMDSoASAFQAw%3D%3D",
+          "jugado": false
+        },
+        {
+          "equipo_local": "eq_04",
+          "equipo_visitante": "eq_01",
+          "fecha": "2026-06-28",
+          "hora": "16:00",
+          "cancha": "Villa Crespo",
+          "ubicacion": "https://www.google.com/maps/place/El+Predio+-+Villa+Crespo/@-34.5935847,-58.4438968,17z/data=!3m1!4b1!4m6!3m5!1s0x95bcb5f540cc758f:0x40a69ebc509eaa58!8m2!3d-34.5935847!4d-58.4413219!16s%2Fg%2F11c56r_b33?entry=ttu&g_ep=EgoyMDI2MDYxMy4wIKXMDSoASAFQAw%3D%3D",
+          "jugado": false
+        }
+      ]
     }
   ]
 }

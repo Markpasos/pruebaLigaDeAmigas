@@ -506,36 +506,6 @@ function renderizarFichaEquipo(equipoId) {
     const contenedorHistorial = document.getElementById('historial-equipo-container');
     if (contenedorHistorial) {
         contenedorHistorial.innerHTML = ''; // Limpia el contenedor de historial
-        
-        // 5.1. Filtrado y renderizado de Partidos Jugados (desde dbPartidos)
-        let partidosJugados = dbPartidos.filter(p => 
-            (p.equipo_local === equipoId || p.equipo_visitante === equipoId) && p.jugado
-        );
-        
-        if (partidosJugados.length > 0) {
-            contenedorHistorial.innerHTML += `<div class="historial-subtitulo">📊 Partidos Jugados</div>`;
-            partidosJugados.forEach(p => {
-                // Convierte IDs de equipos a strings de nombres legibles
-                const localNombre = obtenerNombreEquipo(p.equipo_local);
-                const visitNombre = obtenerNombreEquipo(p.equipo_visitante);
-                
-                // Recalcula el resultado final sumando los goles del evento de ese partido
-                let gLocal = 0, gVisit = 0;
-                p.eventos.goles.forEach(gol => {
-                    if (gol.equipo === p.equipo_local) gLocal++;
-                    else if (gol.equipo === p.equipo_visitante) gVisit++;
-                });
-                
-                // Inyecta la tarjeta del partido con su resultado final
-                contenedorHistorial.innerHTML += `
-                    <div class="partido-card jugado">
-                        <span class="partido-equipo local">${localNombre}</span>
-                        <span class="partido-resultado">${gLocal} - ${gVisit}</span>
-                        <span class="partido-equipo visitante">${visitNombre}</span>
-                    </div>`;
-            });
-        }
-
         // 5.2. Filtrado y mapeo de Próximos Partidos (desde dbFixture)
         let partidosProximos = [];
         dbFixture.forEach(fecha => {
@@ -569,6 +539,34 @@ function renderizarFichaEquipo(equipoId) {
                             <span class="partido-fecha">📅 ${fechaFormateada}</span>
                             <span class="partido-hora">🕐 ${p.hora || '--:--'}</span>
                         </div>
+                        <span class="partido-equipo visitante">${visitNombre}</span>
+                    </div>`;
+            });
+        }
+        // 5.1. Filtrado y renderizado de Partidos Jugados (desde dbPartidos)
+        let partidosJugados = dbPartidos.filter(p => 
+            (p.equipo_local === equipoId || p.equipo_visitante === equipoId) && p.jugado
+        );
+        
+        if (partidosJugados.length > 0) {
+            contenedorHistorial.innerHTML += `<div class="historial-subtitulo">📊 Partidos Jugados</div>`;
+            partidosJugados.forEach(p => {
+                // Convierte IDs de equipos a strings de nombres legibles
+                const localNombre = obtenerNombreEquipo(p.equipo_local);
+                const visitNombre = obtenerNombreEquipo(p.equipo_visitante);
+                
+                // Recalcula el resultado final sumando los goles del evento de ese partido
+                let gLocal = 0, gVisit = 0;
+                p.eventos.goles.forEach(gol => {
+                    if (gol.equipo === p.equipo_local) gLocal++;
+                    else if (gol.equipo === p.equipo_visitante) gVisit++;
+                });
+                
+                // Inyecta la tarjeta del partido con su resultado final
+                contenedorHistorial.innerHTML += `
+                    <div class="partido-card jugado">
+                        <span class="partido-equipo local">${localNombre}</span>
+                        <span class="partido-resultado">${gLocal} - ${gVisit}</span>
                         <span class="partido-equipo visitante">${visitNombre}</span>
                     </div>`;
             });

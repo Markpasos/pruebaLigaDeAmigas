@@ -107,6 +107,49 @@
         "tarjetas": [
         ]
       }
+    },
+    {
+      "fecha": 4,
+      "equipo_local": "eq_05",
+      "equipo_visitante": "eq_02",
+      "jugado": true,
+      "eventos": {
+        "goles": [
+          { "jugadora": "Mily Papein", "equipo": "eq_02" },
+          { "jugadora": "Mily Papein", "equipo": "eq_02" },
+          { "jugadora": "Mily Papein", "equipo": "eq_02" },
+          { "jugadora": "Pilu Romero", "equipo": "eq_02" },
+          { "jugadora": "Jazmín Marín", "equipo": "eq_02" },
+          { "jugadora": "Noelia Tessarini", "equipo": "eq_02" },
+          { "jugadora": "Dai Menna", "equipo": "eq_02" },
+          { "jugadora": "Agustina Bernal", "equipo": "eq_05" }
+        ],
+        "tarjetas": [
+        ]
+      }
+    },
+    {
+      "fecha": 4,
+      "equipo_local": "eq_03",
+      "equipo_visitante": "eq_04",
+      "jugado": true,
+      "eventos": {
+        "goles": [
+          { "jugadora": "Silvina Mango", "equipo": "eq_03" },
+          { "jugadora": "Florencia Yrigoyen", "equipo": "eq_03" },
+          { "jugadora": "Florencia Yrigoyen", "equipo": "eq_03" },
+          { "jugadora": "Angeles Ndrico", "equipo": "eq_03" },
+          { "jugadora": "Angeles Ndrico", "equipo": "eq_03" },
+          { "jugadora": "Laura Villaba", "equipo": "eq_04" },
+          { "jugadora": "Laura Villaba", "equipo": "eq_04" },
+          { "jugadora": "Laura Villaba", "equipo": "eq_04" }
+        ],
+        "tarjetas": [
+          { "jugadora": "Sofia Lopardo", "equipo": "eq_04" },
+          { "jugadora": "Solange Espíndola", "equipo": "eq_04" },
+          { "jugadora": "Angeles Ndrico", "equipo": "eq_03" }
+        ]
+      }
     }
   ]
 }

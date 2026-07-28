@@ -145,9 +145,9 @@
           { "jugadora": "Laura Villaba", "equipo": "eq_04" }
         ],
         "tarjetas": [
-          { "jugadora": "Sofia Lopardo", "equipo": "eq_04" },
-          { "jugadora": "Solange Espíndola", "equipo": "eq_04" },
-          { "jugadora": "Angeles Ndrico", "equipo": "eq_03" }
+          { "jugadora": "Sofia Lopardo", "equipo": "eq_04", "tipo": "amarilla" },
+          { "jugadora": "Solange Espíndola", "equipo": "eq_04", "tipo": "amarilla" },
+          { "jugadora": "Silvina Mango", "equipo": "eq_03", "tipo": "amarilla" }
         ]
       }
     }

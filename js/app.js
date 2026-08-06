@@ -109,6 +109,7 @@ async function initHome() {
 function calcularTablaPosiciones() {
     let tabla = {};
     dbEquipos.forEach(eq => {
+        if (eq.id === "eq_06") return;
         tabla[eq.id] = {
             id: eq.id, nombre: eq.nombre,
             pts: 0, pj: 0, pg: 0, pe: 0, pp: 0,
@@ -387,6 +388,7 @@ async function initEquipos() {
     const selectEquipo = document.getElementById('equipo-select');
     selectEquipo.innerHTML = '';
     dbEquipos.forEach(eq => {
+        if (eq.id === "eq_06") return;
         const option = document.createElement('option');
         option.value = eq.id;
         option.textContent = eq.nombre;

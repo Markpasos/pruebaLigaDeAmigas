@@ -93,7 +93,7 @@
       ]
     },
     {
-      "numero": 5,
+      "numero": 6,
       "partidos": [
         {
           "equipo_local": "eq_03",
@@ -102,12 +102,35 @@
           "hora": "15:00",
           "cancha": "Villa Crespo",
           "ubicacion": "https://www.google.com/maps/place/lo+de+Juve/@-34.6199613,-58.4756209,17z/data=!4m14!1m7!3m6!1s0x95bcc91b20867a95:0xeb6d0044a11da840!2slo+de+Juve!8m2!3d-34.6199613!4d-58.4756209!16s%2Fg%2F11y55vx7c6!3m5!1s0x95bcc91b20867a95:0xeb6d0044a11da840!8m2!3d-34.6199613!4d-58.4756209!16s%2Fg%2F11y55vx7c6?entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D",
-          "jugado": false
+          "jugado": true
         },
         {
           "equipo_local": "eq_01",
           "equipo_visitante": "eq_02",
           "fecha": "2026-08-02",
+          "hora": "16:00",
+          "cancha": "Villa Crespo",
+          "ubicacion": "https://www.google.com/maps/place/lo+de+Juve/@-34.6199613,-58.4756209,17z/data=!4m14!1m7!3m6!1s0x95bcc91b20867a95:0xeb6d0044a11da840!2slo+de+Juve!8m2!3d-34.6199613!4d-58.4756209!16s%2Fg%2F11y55vx7c6!3m5!1s0x95bcc91b20867a95:0xeb6d0044a11da840!8m2!3d-34.6199613!4d-58.4756209!16s%2Fg%2F11y55vx7c6?entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D",
+          "jugado": true
+        }
+      ]
+    },
+        {
+      "numero": 6,
+      "partidos": [
+        {
+          "equipo_local": "eq_04",
+          "equipo_visitante": "eq_06",
+          "fecha": "2026-08-09",
+          "hora": "15:00",
+          "cancha": "Villa Crespo",
+          "ubicacion": "https://www.google.com/maps/place/lo+de+Juve/@-34.6199613,-58.4756209,17z/data=!4m14!1m7!3m6!1s0x95bcc91b20867a95:0xeb6d0044a11da840!2slo+de+Juve!8m2!3d-34.6199613!4d-58.4756209!16s%2Fg%2F11y55vx7c6!3m5!1s0x95bcc91b20867a95:0xeb6d0044a11da840!8m2!3d-34.6199613!4d-58.4756209!16s%2Fg%2F11y55vx7c6?entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D",
+          "jugado": false
+        },
+        {
+          "equipo_local": "eq_01",
+          "equipo_visitante": "eq_02",
+          "fecha": "2026-08-09",
           "hora": "16:00",
           "cancha": "Villa Crespo",
           "ubicacion": "https://www.google.com/maps/place/lo+de+Juve/@-34.6199613,-58.4756209,17z/data=!4m14!1m7!3m6!1s0x95bcc91b20867a95:0xeb6d0044a11da840!2slo+de+Juve!8m2!3d-34.6199613!4d-58.4756209!16s%2Fg%2F11y55vx7c6!3m5!1s0x95bcc91b20867a95:0xeb6d0044a11da840!8m2!3d-34.6199613!4d-58.4756209!16s%2Fg%2F11y55vx7c6?entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D",

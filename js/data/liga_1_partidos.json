@@ -76,7 +76,7 @@
       "eventos": {
         "goles": [
           { "jugadora": "Mily Papein", "equipo": "eq_02" },
-          { "jugadora": "Jazmín Marín", "equipo": "eq_02" },
+          { "jugadora": "Jazmin Marin", "equipo": "eq_02" },
           { "jugadora": "Belu Carregal", "equipo": "eq_02" },
           { "jugadora": "Pilu Romero", "equipo": "eq_02" },
           { "jugadora": "Pilu Romero", "equipo": "eq_02" },
@@ -102,7 +102,7 @@
           { "jugadora": "Laura Villaba", "equipo": "eq_04" },
           { "jugadora": "Laura Villaba", "equipo": "eq_04" },
           { "jugadora": "Emma Cuccaro", "equipo": "eq_04" },
-          { "jugadora": "Solange Espíndola", "equipo": "eq_04" }
+          { "jugadora": "Solange Espindola", "equipo": "eq_04" }
         ],
         "tarjetas": [
         ]
@@ -119,7 +119,7 @@
           { "jugadora": "Mily Papein", "equipo": "eq_02" },
           { "jugadora": "Mily Papein", "equipo": "eq_02" },
           { "jugadora": "Pilu Romero", "equipo": "eq_02" },
-          { "jugadora": "Jazmín Marín", "equipo": "eq_02" },
+          { "jugadora": "Jazmin Marin", "equipo": "eq_02" },
           { "jugadora": "Noelia Tessarini", "equipo": "eq_02" },
           { "jugadora": "Dai Menna", "equipo": "eq_02" },
           { "jugadora": "Agustina Bernal", "equipo": "eq_05" }
@@ -146,8 +146,41 @@
         ],
         "tarjetas": [
           { "jugadora": "Sofia Lopardo", "equipo": "eq_04", "tipo": "amarilla" },
-          { "jugadora": "Solange Espíndola", "equipo": "eq_04", "tipo": "amarilla" },
+          { "jugadora": "Solange Espindola", "equipo": "eq_04", "tipo": "amarilla" },
           { "jugadora": "Silvina Mango", "equipo": "eq_03", "tipo": "amarilla" }
+        ]
+      }
+    },
+    {
+      "fecha": 5,
+      "equipo_local": "eq_03",
+      "equipo_visitante": "eq_05",
+      "jugado": true,
+      "eventos": {
+        "goles": [
+          { "jugadora": "Antonella Colombo", "equipo": "eq_03" },
+          { "jugadora": "Antonella Colombo", "equipo": "eq_03" },
+          { "jugadora": "Antonella Colombo", "equipo": "eq_03" },
+          { "jugadora": "Micaela Rodriguez", "equipo": "eq_05" },
+          { "jugadora": "Belen Huarita", "equipo": "eq_05" }
+        ],
+        "tarjetas": [
+
+        ]
+      }
+    },
+    {
+      "fecha": 5,
+      "equipo_local": "eq_01",
+      "equipo_visitante": "eq_02",
+      "jugado": true,
+      "eventos": {
+        "goles": [
+          { "jugadora": "Antonella De Stefano", "equipo": "eq_01" },
+          { "jugadora": "Mily Papein", "equipo": "eq_02" }
+        ],
+        "tarjetas": [
+          { "jugadora": "Mica Torres", "equipo": "eq_02", "tipo": "amarilla" }
         ]
       }
     }

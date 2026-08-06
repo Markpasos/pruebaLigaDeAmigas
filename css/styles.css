@@ -941,3 +941,294 @@ footer {
             height: 20px;
             fill: white;
         }
+
+       /* ==========================================
+   PÁGINA FINAL & EXHIBICIÓN (OPTIMIZADO)
+   ========================================== */
+/* ---------- 1. CONFIGURACIÓN DE VARIABLES ---------- */
+
+#pagina-final {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 20px;
+
+  /* 1. CONFIGURACIÓN DE VARIABLES BASE (100% Gran Final) */
+  --tamano-escudo: 140px;
+  --tamano-nombre: 1.5rem;
+  --tamano-vs: 60px;
+  --tamano-vs-texto: 1.5rem;
+}
+
+#pagina-final .final-container {
+  background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 40px 30px;
+  max-width: 900px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  color: #ffffff;
+}
+
+#pagina-final .torneo-nombre {
+  display: block;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #38bdf8;
+  margin-bottom: 5px;
+}
+
+#pagina-final .titulo-gran-final {
+  font-size: 3rem;
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #f59e0b, #fef08a, #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 2px;
+}
+
+#pagina-final .linea-decorativa {
+  width: 80px;
+  height: 4px;
+  background: #f59e0b;
+  margin: 15px auto 35px;
+  border-radius: 2px;
+}
+
+/* ---------- LA GRAN FINAL (UTILIZA LAS VARIABLES) ---------- */
+#pagina-final .matchup {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 35px;
+}
+
+#pagina-final .equipo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#pagina-final .logo-wrapper {
+  width: var(--tamano-escudo);
+  height: var(--tamano-escudo);
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+  overflow: hidden;
+}
+
+#pagina-final .logo-wrapper:hover {
+  transform: scale(1.05);
+}
+
+#pagina-final .logo-equipo {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+#pagina-final .nombre-equipo {
+  font-size: var(--tamano-nombre);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+#pagina-final .vs-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ef4444;
+  color: #ffffff;
+  min-width: var(--tamano-vs);
+  height: var(--tamano-vs);
+  padding: 0 16px;
+  border-radius: 30px;
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+#pagina-final .vs-texto {
+  font-size: var(--tamano-vs-texto);
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: 1px;
+}
+
+@keyframes brilloBorde {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pulsoFuego {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.4),
+                0 0 30px rgba(239, 68, 68, 0.2);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(245, 158, 11, 0.7),
+                0 0 45px rgba(239, 68, 68, 0.4);
+    transform: scale(1.03);
+  }
+}
+
+#pagina-final .final-badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 24px;
+  background: linear-gradient(135deg, #1f1108 0%, #170d05 100%);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 900;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  border-radius: 50px;
+  border: 1px solid transparent;
+  
+  /* Borde animado con gradiente metálico/fuego */
+  background-image: 
+    linear-gradient(#170d05, #170d05), 
+    linear-gradient(90deg, #f59e0b, #ef4444, #fef08a, #f59e0b);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  background-size: 200% 200%;
+  
+  /* Efecto de resplandor animado */
+  animation: brilloBorde 4s ease infinite, pulsoFuego 3s infinite ease-in-out;
+  margin-bottom: 25px;
+}
+
+/* Texto dorado iridiscente */
+#pagina-final .final-badge span,
+#pagina-final .final-badge {
+  background: linear-gradient(180deg, #ffffff 0%, #fef08a 40%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
+}
+
+/* Destello brillante superior */
+#pagina-final .final-badge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 15%;
+  width: 70%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+}
+
+/* ---------- PARTIDO EXHIBICIÓN (RECALCULA AL 60%) ---------- */
+#pagina-final .exhibicion-container {
+  /* Al multiplicar por 0.6, se ajusta todo automáticamente */
+  --tamano-escudo: calc(140px * 0.6);   /* 84px */
+  --tamano-nombre: calc(1.5rem * 0.6);  /* 0.9rem */
+  --tamano-vs: calc(60px * 0.6);        /* 36px */
+  --tamano-vs-texto: calc(1.5rem * 0.6);/* 0.9rem */
+
+  /* Espaciado hacia ABAJO para separar los textos del "Bonus Track" de los logos de La Gran Final */
+  margin-top: 0;
+  margin-bottom: 10px;       /* Distancia con los logos gigantes de la Final */
+  padding-bottom: 5px;      /* Espacio previo al borde o separador */
+ 
+  
+  max-width: 580px;
+  margin-left: auto;
+  margin-right: auto;
+
+  /* Espacio importante entre los nombres/logos de la Final y la Exhibición */
+  margin-top: 11px;
+  padding-top: 6px;
+  max-width: 580px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#pagina-final .exhibicion-badge {
+  display: inline-block;
+  background: rgba(56, 189, 248, 0.12);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+#pagina-final .matchup-exhibicion {
+  margin-bottom: 0;
+  gap: 12px;
+}
+
+#pagina-final .logo-exhibicion {
+  width: var(--tamano-escudo);
+  height: var(--tamano-escudo);
+  background-color: rgba(255, 255, 255, 0.03);
+  margin-bottom: 8px; /* Separa el logo del texto "EL REJUNTE FC" */
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+#pagina-final .nombre-exhibicion {
+  font-size: var(--tamano-nombre); /* Toma los 0.9rem calculados */
+  font-weight: 600;
+  color: #9ca3af;
+}
+
+#pagina-final .vs-exhibicion {
+  min-width: var(--tamano-vs);
+  height: var(--tamano-vs);
+  padding: 0 10px;
+  background: #6366f1;
+  box-shadow: 0 0 8px rgba(99, 102, 241, 0.4);
+}
+
+#pagina-final .vs-exhibicion .vs-texto {
+  font-size: var(--tamano-vs-texto);
+  font-weight: 800;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 640px) {
+  #pagina-final {
+    --tamano-escudo: 110px;
+    --tamano-nombre: 1.2rem;
+    --tamano-vs: 50px;
+    --tamano-vs-texto: 1.2rem;
+  }
+
+  #pagina-final .matchup {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  #pagina-final .titulo-gran-final {
+    font-size: 2.2rem;
+  }
+
+  /* La exhibición mantiene su formato horizontal compacto */
+  #pagina-final .matchup-exhibicion {
+    flex-direction: row;
+  }
+}
